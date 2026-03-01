@@ -256,4 +256,4 @@ Welcome to our developer community! Whether you want to discuss new engineering 
 
 * 🟢 **Feishu (Lark)**: [Click here to join our Feishu discussion group](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=a1cuff9f-347a-43ce-8825-79c2a38038c6)
 
-* 🔜 **Discord / Slack**: (Preparing, coming soon...)
+* 🔜 **Discord**: [Click here to join our Discord community](https://discord.gg/hxeVhZNN)

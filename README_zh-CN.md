@@ -241,4 +241,4 @@
 欢迎加入我们的开发者社区！无论你是想讨论新的工程问题构想、寻找任务合作者，还是在贡献过程中遇到了技术问题，都可以在群里与我们随时交流。
 
 * 🟢 **飞书**: [点击这里加入我们的飞书讨论群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=a1cuff9f-347a-43ce-8825-79c2a38038c6)
-* 🔜 **Discord / Slack**: (筹备中，即将推出...)
+* 🔜 **Discord**: [点击这里加入我们的Discord社区](https://discord.gg/hxeVhZNN)
