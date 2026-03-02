@@ -10,13 +10,13 @@ import json
 
 submission = {
     "step_frequency": 1.8,
-    "duty_factor": 0.62,
-    "step_length": 0.16,
-    "step_height": 0.07,
+    "duty_factor": 0.42,
+    "step_length": 0.18,
+    "step_height": 0.11,
     "phase_FR": 0.5,
     "phase_RL": 0.5,
     "phase_RR": 0.0,
-    "lateral_distance": 0.13,
+    "lateral_distance": 0.16,
 }
 
 with open("submission.json", "w", encoding="utf-8") as f:

@@ -36,7 +36,7 @@ def _in_range(v: float, lo: float, hi: float, inclusive_hi: bool = True) -> bool
 
 def _load_submission(path: Path) -> dict[str, float] | None:
     try:
-        with path.open("r", encoding="utf-8") as f:
+        with path.open("r", encoding="utf-8-sig") as f:
             raw = json.load(f)
     except Exception as exc:
         print(f"ERROR: invalid submission: {exc}")
@@ -70,7 +70,7 @@ def evaluate(submission_path: Path) -> float:
     task_root = this_dir.parent
     cfg_path = task_root / "references" / "gait_config.json"
 
-    with cfg_path.open("r", encoding="utf-8") as f:
+    with cfg_path.open("r", encoding="utf-8-sig") as f:
         cfg = json.load(f)
 
     params = _load_submission(submission_path)
