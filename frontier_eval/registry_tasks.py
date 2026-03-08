@@ -24,6 +24,7 @@ from frontier_eval.tasks.trimul import TriMulTask
 from frontier_eval.tasks.smoke import SmokeTask
 from frontier_eval.tasks.trimul import TriMulTask
 from frontier_eval.tasks.wireless_channel_simulation import HighReliableSimulationTask
+from frontier_eval.tasks.topology_optimization import TopologyOptimizationTask
 from frontier_eval.tasks.unified import UnifiedTask
 
 _TASKS: dict[str, Type[Task]] = {
@@ -45,6 +46,7 @@ _TASKS: dict[str, Type[Task]] = {
     MLATask.NAME: MLATask,
     MallocLabTask.NAME: MallocLabTask,
     HighReliableSimulationTask.NAME: HighReliableSimulationTask,
+    TopologyOptimizationTask.NAME: TopologyOptimizationTask,
     UnifiedTask.NAME: UnifiedTask,
 }
 
