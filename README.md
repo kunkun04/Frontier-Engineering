@@ -325,6 +325,6 @@ An initial integration between some evaluation algorithms and benchmarks has bee
 ## 💬 Join the Community
 Welcome to our developer community! Whether you want to discuss new engineering problem concepts, find task collaborators, or encounter technical issues during your contribution, you can always communicate with us in the group.
 
-* 🟢 **Feishu (Lark)**: [Click here to join our Feishu discussion group](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=a1cuff9f-347a-43ce-8825-79c2a38038c6)
+* 🟢 **Feishu (Lark)**: [Click here to join our Feishu discussion group](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=21ak5858-60ba-44fd-9085-01f165c8771c)
 
 * 🔜 **Discord**: [Click here to join our Discord community](https://discord.gg/hxeVhZNN)
