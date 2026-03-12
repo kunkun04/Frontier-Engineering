@@ -48,9 +48,3 @@ python verification/evaluate.py
 - `verification/outputs/metrics.json`
 - `verification/outputs/metrics_comparison.png`
 - `verification/outputs/example_visualization.png`
-
-## Baseline 与 Oracle 约束
-
-- Baseline 目标是 `baseline/init.py`，应避免重型第三方求解器。
-- Reference/oracle 是带延迟补偿的解析平滑控制器（仍不依赖第三方优化器）。
-- 当前配置为 `v3_delay_and_model_mismatch`，包含观测延迟与执行器约束。

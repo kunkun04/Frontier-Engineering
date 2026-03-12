@@ -1,6 +1,6 @@
 # Adaptive A2 Specification: Temporal Smooth Control
 
-## Background for CS Readers
+## Background
 
 This task is a **sequential decision/control** problem.
 
@@ -53,7 +53,7 @@ Goal:
 - `dm_commands: np.ndarray`, shape `(n_act,)`
   - Must be finite and bounded in `[-max_voltage, max_voltage]`.
 
-## Verification Scenario (v3_delay_and_model_mismatch)
+## Verification Scenario
 
 The evaluator simulates a realistic temporal AO process:
 

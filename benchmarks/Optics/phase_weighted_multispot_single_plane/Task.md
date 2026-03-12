@@ -1,6 +1,6 @@
 # Phase DOE P1 Contract: Hard Weighted Multi-Spot
 
-## Background (for CS engineers)
+## Background
 You can view this task as a **2D optimization problem**:
 - Input: a phase map `phase[y, x]`
 - Black-box forward model: `phase -> far-field intensity`

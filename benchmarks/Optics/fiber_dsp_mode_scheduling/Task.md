@@ -1,6 +1,6 @@
 # Fiber F3 Specification: DSP Mode Scheduling (EDC vs DBP)
 
-## Background (for CS readers)
+## Background
 
 In coherent optical receivers, there are different DSP processing modes:
 

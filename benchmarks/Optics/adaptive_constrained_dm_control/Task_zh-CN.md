@@ -58,7 +58,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
     - 不含 NaN/Inf
     - 所有元素在 `[-max_voltage, max_voltage]`
 
-## Verification 场景（v3_delay_and_model_mismatch）
+## Verification 场景
 
 `verification/evaluate.py` 构造了带工程噪声和失配的动态基准：
 

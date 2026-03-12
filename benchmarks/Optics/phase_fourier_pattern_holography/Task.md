@@ -1,6 +1,6 @@
 # Phase DOE P2 Contract: Hard Fourier Pattern Holography
 
-## Background (for CS engineers)
+## Background
 This task is image reconstruction under constraints:
 - Decision variable: phase map `phase[y, x]`
 - Forward model: FFT-based propagation to intensity image

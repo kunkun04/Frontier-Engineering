@@ -1,10 +1,6 @@
 # Holographic H3 Specification: Multi-Wavelength Focusing/Splitting
 
-## Who this doc is for
-
-This task is written for engineers who know optimization/code, not necessarily optics.
-
-## Engineering background (plain-language)
+## Engineering background
 
 Different wavelengths (colors) naturally propagate differently.
 

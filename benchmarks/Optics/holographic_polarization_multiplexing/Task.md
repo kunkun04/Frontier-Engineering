@@ -1,10 +1,6 @@
 # Holographic H4 Specification: Polarization Multiplexing
 
-## Who this doc is for
-
-You are comfortable with optimization and software engineering, but may be new to polarization optics.
-
-## Engineering background (plain-language)
+## Engineering background
 
 In polarization multiplexing, the same optical element should behave differently for different input polarization states.
 

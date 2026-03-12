@@ -1,6 +1,6 @@
 # Fiber F2 Specification: Joint MCS + Power Scheduling
 
-## Background (for CS readers)
+## Background
 
 In digital communication, each user link can choose a modulation level (MCS) and transmit power.
 

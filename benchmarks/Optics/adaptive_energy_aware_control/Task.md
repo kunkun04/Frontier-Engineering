@@ -1,6 +1,6 @@
 # Adaptive A3 Specification: Energy-Aware Control
 
-## Background for CS Readers
+## Background
 
 This task is a **multi-objective optimization** problem.
 
@@ -52,7 +52,7 @@ Goal:
 - `dm_commands: np.ndarray`, shape `(n_act,)`
   - Must have correct shape, finite values, and satisfy bounds.
 
-## Verification Scenario (v3_delay_and_model_mismatch)
+## Verification Scenario
 
 `verification/evaluate.py` builds a dynamic benchmark with delayed sensing and mismatch:
 

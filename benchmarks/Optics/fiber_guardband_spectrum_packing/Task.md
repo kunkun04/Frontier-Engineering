@@ -1,6 +1,6 @@
 # Fiber F4 Specification: Spectrum Packing with Guard Bands
 
-## Background (for CS readers)
+## Background
 
 Elastic optical networking can be modeled as packing variable-width requests into a finite 1D spectrum grid.
 

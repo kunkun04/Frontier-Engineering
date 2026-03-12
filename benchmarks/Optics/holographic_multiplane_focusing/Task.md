@@ -1,10 +1,6 @@
 # Holographic H2 Specification: Multi-Plane Focusing
 
-## Who this doc is for
-
-You are expected to understand optimization/programming, but not optical physics.
-
-## Engineering background (plain-language)
+## Engineering background
 
 Task 1 is single-plane focusing. Task 2 adds **depth**.
 

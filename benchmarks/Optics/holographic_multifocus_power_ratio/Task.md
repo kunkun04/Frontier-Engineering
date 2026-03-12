@@ -1,10 +1,6 @@
 # Holographic H1 Specification: Multifocus Power-Ratio Control
 
-## Who this doc is for
-
-This document assumes you have a **computer science background** (optimization, tensors, training loops), but **no optics background**.
-
-## Engineering background (plain-language)
+## Engineering background
 
 You can think of this task as "image formation by a physical compiler":
 

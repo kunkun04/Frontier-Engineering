@@ -1,6 +1,6 @@
 # 自适应光学 A4 说明：故障容忍的多传感器融合
 
-## 给 CS 背景读者的领域背景
+## 领域背景
 
 这是一个**鲁棒估计 + 控制**问题。
 
@@ -45,7 +45,7 @@ def fuse_and_compute_dm_commands(slopes_multi, reconstructor, control_model, pre
 - `dm_commands: np.ndarray`，形状 `(n_act,)`
   - 必须有限且满足 `[-max_voltage, max_voltage]`。
 
-## Verification 场景（v3_fault_stress）
+## Verification 场景
 
 `verification/evaluate.py` 构造故障主导的压力测试：
 

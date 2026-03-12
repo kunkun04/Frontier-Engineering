@@ -1,6 +1,6 @@
 # Phase DOE P3 Contract: Dammann Uniform Orders
 
-## Background (for CS engineers)
+## Background
 This is a **parameter optimization** task.
 You optimize a 1D vector `transitions` (binary phase switching positions in one grating period), and evaluate a simulator output.
 

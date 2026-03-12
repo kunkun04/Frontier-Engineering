@@ -1,6 +1,6 @@
 # Phase DOE P4 Contract: Large-Scale Weighted Spot Array
 
-## Background (for CS engineers)
+## Background
 This task is dense multi-target allocation:
 - decision variable: phase map `(N, N)`
 - forward model: Fourier propagation

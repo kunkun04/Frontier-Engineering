@@ -1,6 +1,5 @@
 # 自适应光学 A2 说明：时间平滑控制
 
-## 给 CS 背景读者的领域背景
 
 这是一个**时序控制问题**。
 
@@ -53,7 +52,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands, max
 - `dm_commands: np.ndarray`，形状 `(n_act,)`
   - 必须有限且满足 `[-max_voltage, max_voltage]`。
 
-## Verification 场景（v3_delay_and_model_mismatch）
+## Verification 场景
 
 评测器模拟了较真实的时序 AO 环境：
 

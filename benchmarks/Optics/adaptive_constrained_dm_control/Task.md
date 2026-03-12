@@ -59,7 +59,7 @@ Goal:
     - no NaN/Inf
     - all entries in `[-max_voltage, max_voltage]`
 
-## Verification Scenario (v3_delay_and_model_mismatch)
+## Verification Scenario
 
 `verification/evaluate.py` uses a dynamic benchmark with practical disturbances:
 

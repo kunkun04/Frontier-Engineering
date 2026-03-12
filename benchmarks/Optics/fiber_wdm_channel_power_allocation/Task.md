@@ -1,6 +1,6 @@
 # Fiber F1 Specification: WDM Channel + Power Allocation
 
-## Background (for CS readers)
+## Background
 
 In a WDM (Wavelength Division Multiplexing) optical system, multiple users share the same fiber by occupying different wavelength channels.
 

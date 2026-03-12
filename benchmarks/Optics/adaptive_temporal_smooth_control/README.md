@@ -49,9 +49,3 @@ python verification/evaluate.py
 - `verification/outputs/metrics.json`
 - `verification/outputs/metrics_comparison.png`
 - `verification/outputs/example_visualization.png`
-
-## Baseline vs Oracle Policy
-
-- Baseline target is `baseline/init.py` and should avoid heavy third-party solvers.
-- Reference oracle is a delay-compensated analytical smooth controller (still no external optimizer).
-- Current profile is `v3_delay_and_model_mismatch`, including delayed sensing and actuator constraints.

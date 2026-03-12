@@ -1,6 +1,6 @@
 # 自适应光学 A3 说明：能耗感知控制
 
-## 给 CS 背景读者的领域背景
+## 领域背景
 
 这是一个**多目标优化**任务。
 
@@ -52,7 +52,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
 - `dm_commands: np.ndarray`，形状 `(n_act,)`
   - 必须形状正确、数值有限、且不越界。
 
-## Verification 场景（v3_delay_and_model_mismatch）
+## Verification 场景
 
 `verification/evaluate.py` 构造动态且含失配的评测环境：
 
