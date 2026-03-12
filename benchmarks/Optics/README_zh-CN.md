@@ -1,15 +1,6 @@
 # 光学任务集（16个子任务）
 
-该目录已重组为 **扁平化的 16 个光学工程任务**，并提供统一入口文档与统一依赖。
-
-## 16个任务的共同背景
-
-所有任务都遵循同一个 benchmark 形式：
-
-1. 每个任务只允许修改一个 baseline 求解/控制文件。
-2. `verification` 与 oracle 对比逻辑只读。
-3. 在物理或系统约束下优化工程目标。
-4. 输出可复现实验指标（JSON）和可视化结果。
+## 共同背景
 
 这 16 个任务覆盖四类真实光学优化场景：
 
@@ -18,16 +9,14 @@
 - 光纤通信资源调度，
 - 可微衍射光学多条件设计（空间/深度/光谱/偏振）。
 
-## 重组后的命名规则
-
-原先 4 个外层目录已移除，任务直接放到 `benchmarks/Optics` 下，并采用语义前缀：
+任务大致分为四组，并采用语义前缀：
 
 - `adaptive_*`：自适应光学控制类
 - `phase_*`：相位 DOE 类
 - `fiber_*`：光通信资源调度类
 - `holographic_*`：可微全息设计类
 
-## 16个子任务差异
+## 子任务差异
 
 | 任务目录 | 核心优化目标 | 典型难点/约束 |
 |---|---|---|
@@ -52,11 +41,7 @@
 
 不同任务族的打分字段略有差异（例如 `score_0_to_1_higher_is_better`、`score_pct`），但方向统一为 **分数越高越好**。
 
-## 统一依赖结论
-
-对原 4 套依赖做交叉检查后，没有发现必须拆分环境的硬冲突，可以合并为一个依赖文件。
-
-安装方式：
+## 环境依赖
 
 ```bash
 python -m pip install -r benchmarks/Optics/requirements.txt
@@ -70,24 +55,3 @@ python benchmarks/Optics/phase_weighted_multispot_single_plane/verification/vali
 python benchmarks/Optics/fiber_wdm_channel_power_allocation/verification/run_validation.py
 python benchmarks/Optics/holographic_multifocus_power_ratio/verification/evaluate.py
 ```
-
-## 旧目录到新目录映射
-
-| 旧路径 | 新路径 |
-|---|---|
-| `AoTools/task1_constrained_dm_control` | `adaptive_constrained_dm_control` |
-| `AoTools/task2_temporal_smooth_control` | `adaptive_temporal_smooth_control` |
-| `AoTools/task3_energy_aware_control` | `adaptive_energy_aware_control` |
-| `AoTools/task4_fault_tolerant_fusion` | `adaptive_fault_tolerant_fusion` |
-| `diffractio/task01_weighted_multispot_single_plane` | `phase_weighted_multispot_single_plane` |
-| `diffractio/task02_fourier_pattern_holography` | `phase_fourier_pattern_holography` |
-| `diffractio/task03_dammann_uniform_orders` | `phase_dammann_uniform_orders` |
-| `diffractio/task04_large_scale_spot_array` | `phase_large_scale_weighted_spot_array` |
-| `OptiCommpy/task1_wdm_channel_power` | `fiber_wdm_channel_power_allocation` |
-| `OptiCommpy/task2_mcs_power` | `fiber_mcs_power_scheduling` |
-| `OptiCommpy/task3_dsp_mode` | `fiber_dsp_mode_scheduling` |
-| `OptiCommpy/task4_spectrum_packing` | `fiber_guardband_spectrum_packing` |
-| `torchoptics/task1_multifocus_power_ratio` | `holographic_multifocus_power_ratio` |
-| `torchoptics/task2_multiplane_focusing` | `holographic_multiplane_focusing` |
-| `torchoptics/task3_multispectral_focusing` | `holographic_multispectral_focusing` |
-| `torchoptics/task4_polarization_multiplexing` | `holographic_polarization_multiplexing` |

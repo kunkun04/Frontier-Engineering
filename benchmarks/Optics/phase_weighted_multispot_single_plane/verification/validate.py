@@ -143,7 +143,7 @@ def main() -> None:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    baseline_module = load_module(Path(__file__).resolve().parents[1] / "baseline" / "solve.py")
+    baseline_module = load_module(Path(__file__).resolve().parents[1] / "baseline" / "init.py")
     problem = baseline_module.build_problem()
 
     phase_baseline = baseline_module.solve_baseline(problem)

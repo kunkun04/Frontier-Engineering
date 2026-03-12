@@ -1,6 +1,6 @@
 # Fiber F2 Specification: Joint MCS + Power Scheduling
 
-## 1. Background (for CS readers)
+## Background (for CS readers)
 
 In digital communication, each user link can choose a modulation level (MCS) and transmit power.
 
@@ -15,16 +15,16 @@ From a CS perspective, this can be seen as a multiple-choice knapsack style prob
 - all users share one global power budget,
 - objective mixes satisfaction, reliability, and spectral efficiency.
 
-## 2. What You Need To Do
+## What You Need To Do
 
 Implement the candidate policy function:
 
-- editable file: `baseline/solver.py`
+- editable file: `baseline/init.py`
 - function to evolve: `select_mcs_power(...)`
 
 Verification logic and oracle remain read-only.
 
-## 3. Function Interface
+## Function Interface
 
 ```python
 def select_mcs_power(
@@ -43,7 +43,7 @@ def select_mcs_power(
     }
 ```
 
-## 4. Input / Output Semantics
+## Input / Output Semantics
 
 Inputs:
 
@@ -59,7 +59,7 @@ Outputs:
 - `mcs[u]`: modulation order selected for user `u`.
 - `power_dbm[u]`: allocated power for user `u`.
 
-## 5. Hard Validity Constraints
+## Hard Validity Constraints
 
 1. output must be dict with keys `mcs`, `power_dbm`
 2. `mcs.shape == (U,)`
@@ -70,7 +70,7 @@ Outputs:
 
 If hard checks fail, run stops with error summary.
 
-## 6. Verification Pipeline and Metrics
+## Verification Pipeline and Metrics
 
 Scenario (`seed=123`) in verification:
 
@@ -101,9 +101,9 @@ Validity thresholds:
 - `demand_satisfaction >= 0.40`
 - `ber_pass_ratio >= 0.03`
 
-## 7. Baseline (Simple, Low Dependency)
+## Baseline (Simple, Low Dependency)
 
-Current baseline in `baseline/solver.py`:
+Current baseline in `baseline/init.py`:
 
 1. quality-threshold MCS selection (`>=15 -> 16`, `>=22 -> 64`, else lowest),
 2. equal power split across users,
@@ -111,7 +111,7 @@ Current baseline in `baseline/solver.py`:
 
 Dependency is only `numpy`.
 
-## 8. Oracle (Stronger Reference)
+## Oracle (Stronger Reference)
 
 `verification/oracle.py` provides stronger optimization:
 
@@ -130,7 +130,7 @@ Oracle modes:
 - `--oracle-mode heuristic`: force DP fallback
 - `--oracle-mode auto`: CP-SAT first, DP fallback
 
-## 9. Files in `verification/outputs/`
+## Files in `verification/outputs/`
 
 Generated per run:
 
@@ -151,7 +151,7 @@ Generated per run:
 
 These outputs help both automatic ranking and manual diagnosis.
 
-## 10. Why This Task Is Engineering-Relevant
+## Why This Task Is Engineering-Relevant
 
 This task mirrors real adaptive-link control:
 

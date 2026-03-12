@@ -11,14 +11,14 @@
 
 ## Agent 可编辑目标
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - 函数：`allocate_wdm(...)`
 
 建议只进化这个策略函数。
 
 ## 目录说明
 
-- `baseline/solver.py`: 基础实现（顺序分配 + 等功率）
+- `baseline/init.py`: 基础实现（顺序分配 + 等功率）
 - `verification/oracle.py`: 更优参考策略（不可编辑，支持 `auto/hybrid_scipy/heuristic`）
 - `verification/run_validation.py`: valid 检查、打分、对比、可视化
 - `Task.md`: 任务完整定义
@@ -33,7 +33,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 
 必需依赖（baseline + verification）：
 
-- 推荐解释器：`/data_storage/chihh2311/.conda/envs/opticommpy/bin/python`
+- 推荐解释器：`python`
 - `numpy`
 - `matplotlib`
 - `optic`（本仓库内 OptiCommPy 包，verification 通过它调用 `theoryBER`）
@@ -45,7 +45,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 ## 运行方法
 
 ```bash
-/data_storage/chihh2311/.conda/envs/opticommpy/bin/python \
+python \
   benchmarks/Optics/fiber_wdm_channel_power_allocation/verification/run_validation.py
 ```
 

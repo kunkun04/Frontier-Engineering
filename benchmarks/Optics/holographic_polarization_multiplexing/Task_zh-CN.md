@@ -1,10 +1,10 @@
 # 可微全息 H4 规范：偏振复用
 
-## 0. 适用读者
+## 适用读者
 
 你可以没有偏振光学背景，但应具备优化与工程实现能力。
 
-## 1. 工程背景（通俗版）
+## 工程背景（通俗版）
 
 偏振复用的核心是：同一个光学器件，对不同偏振输入产生不同输出功能。
 
@@ -30,28 +30,28 @@ CS 类比：
 
 - 一个器件多功能，可减少硬件数量与系统集成成本。
 
-## 2. 你要做的事
+## 你要做的事
 
 改进 baseline，使其在“通道分离 + 目标配比 + 有效能量”上更好。
 
 可编辑：
 
-- `baseline/solver.py`
+- `baseline/init.py`
 
 通常只读：
 
 - `verification/evaluate.py`
 - `verification/reference_solver.py`
 
-## 3. 核心修改文件/函数
+## 核心修改文件/函数
 
 主要修改：
 
-- `baseline/solver.py` 的 `solve(spec, device=None, seed=0)`
+- `baseline/init.py` 的 `solve(spec, device=None, seed=0)`
 
 保持返回字段兼容。
 
-## 4. 输入协议（`spec`）
+## 输入协议（`spec`）
 
 核心字段：
 
@@ -69,7 +69,7 @@ CS 类比：
 - valid 阈值，
 - better 判定 margin。
 
-## 5. 输出协议（`solve` 返回）
+## 输出协议（`solve` 返回）
 
 至少返回：
 
@@ -80,7 +80,7 @@ CS 类比：
 
 评测会直接读取这些字段计算指标。
 
-## 6. Baseline 当前实现
+## Baseline 当前实现
 
 baseline 目前刻意简化：
 
@@ -94,7 +94,7 @@ baseline 目前刻意简化：
 - 没有显式配比项，
 - 没有显式目标通道效率项。
 
-## 7. Oracle 当前实现
+## Oracle 当前实现
 
 `verification/reference_solver.py` 更强：
 
@@ -109,7 +109,7 @@ baseline 目前刻意简化：
 
 作为工程上更强对照。
 
-## 8. 指标与分数（0~1）
+## 指标与分数（0~1）
 
 核心指标：
 
@@ -132,7 +132,7 @@ baseline 目前刻意简化：
 - 该分数更强调“通道分离”和“目标通道有效能量”，
 - 图样相似度仍有作用，但权重较小。
 
-## 9. valid 与 better 规则
+## valid 与 better 规则
 
 `baseline valid=True` 需满足：
 
@@ -145,7 +145,7 @@ baseline 目前刻意简化：
 - `reference_score >= baseline_score + better_score_margin`
 - `reference_separation >= baseline_separation + better_sep_margin`
 
-## 10. 评测输出文件说明（artifacts）
+## 评测输出文件说明（artifacts）
 
 输出目录：`verification/artifacts/`
 
@@ -163,7 +163,7 @@ baseline 目前刻意简化：
 - separation 高但 ratio_score 低：通道内配比分配不对，
 - efficiency_score 低：目标 ROI 内有效能量不足。
 
-## 11. 运行方式
+## 运行方式
 
 ```bash
 PY=python3

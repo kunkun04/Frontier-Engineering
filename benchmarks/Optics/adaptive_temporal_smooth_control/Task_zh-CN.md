@@ -1,6 +1,6 @@
 # 自适应光学 A2 说明：时间平滑控制
 
-## 1. 给 CS 背景读者的领域背景
+## 给 CS 背景读者的领域背景
 
 这是一个**时序控制问题**。
 
@@ -12,11 +12,11 @@
 
 所以目标不是“每帧最优”，而是“精度 + 平滑性”的工程折中。
 
-## 2. 你需要做什么
+## 你需要做什么
 
 只修改一个函数：
 
-- 可编辑文件：`baseline/controller.py`
+- 可编辑文件：`baseline/init.py`
 - 目标函数：
 
 ```python
@@ -28,7 +28,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands, max
 - 提升 `score_0_to_1_higher_is_better`。
 - 保持输出始终 valid。
 
-## 3. 输入输出契约
+## 输入输出契约
 
 ### 输入
 
@@ -53,7 +53,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands, max
 - `dm_commands: np.ndarray`，形状 `(n_act,)`
   - 必须有限且满足 `[-max_voltage, max_voltage]`。
 
-## 4. Verification 场景（v3_delay_and_model_mismatch）
+## Verification 场景（v3_delay_and_model_mismatch）
 
 评测器模拟了较真实的时序 AO 环境：
 
@@ -65,7 +65,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands, max
 
 好的控制器需要在延迟观测下避免过度反应，并降低命令跳变。
 
-## 5. 指标与分数（0~1，越高越好）
+## 指标与分数（0~1，越高越好）
 
 排行榜目标：
 - `score_0_to_1_higher_is_better`，范围 `[0, 1]`
@@ -90,9 +90,9 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands, max
 
 `raw_cost_lower_is_better` 仅用于调试分析。
 
-## 6. Baseline 实现
+## Baseline 实现
 
-当前 baseline（`baseline/controller.py`）：
+当前 baseline（`baseline/init.py`）：
 1. `u = reconstructor @ slopes`
 2. `clip` 到电压边界
 
@@ -101,7 +101,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands, max
 - 不处理平滑目标
 - 不补偿延迟观测
 
-## 7. Oracle / Reference 实现
+## Oracle / Reference 实现
 
 reference（`verification/reference_controller.py`）为解析平滑控制器：
 
@@ -115,12 +115,12 @@ reference（`verification/reference_controller.py`）为解析平滑控制器：
 
 它不依赖重型外部优化器，但明显强于逐帧独立控制。
 
-## 8. verification/outputs 文件作用
+## verification/outputs 文件作用
 
 运行：
 
 ```bash
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+python verification/evaluate.py
 ```
 
 会在 `verification/outputs/` 生成：
@@ -134,7 +134,7 @@ reference（`verification/reference_controller.py`）为解析平滑控制器：
   - 代表样本的 phase/residual/PSF 可视化对比。
   - 用于确认分数提升是否对应更合理的物理补偿。
 
-## 9. 依赖与约束策略
+## 依赖与约束策略
 
 - Baseline 期望保持轻量（`numpy` + 给定矩阵）。
 - Reference 为解析形式，不依赖外部优化求解器。

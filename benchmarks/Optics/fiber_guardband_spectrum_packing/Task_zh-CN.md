@@ -1,6 +1,6 @@
 # 光通信 F4 说明：带保护带约束的频谱打包
 
-## 1. 背景（面向 CS 背景）
+## 背景（面向 CS 背景）
 
 弹性光网络可抽象为：把不同宽度的业务请求，打包到一维有限频谱槽位中。
 
@@ -12,16 +12,16 @@
 
 这和带额外约束的 bin packing / interval scheduling 很接近。
 
-## 2. 你要做什么
+## 你要做什么
 
 只改一个函数：
 
-- 可编辑文件：`baseline/solver.py`
+- 可编辑文件：`baseline/init.py`
 - 目标函数：`pack_spectrum(...)`
 
 `verification/` 下评测与 oracle 为只读参考。
 
-## 3. 函数接口
+## 函数接口
 
 ```python
 def pack_spectrum(user_demand_slots, n_slots, guard_slots=1, seed=0):
@@ -33,7 +33,7 @@ def pack_spectrum(user_demand_slots, n_slots, guard_slots=1, seed=0):
 - 分配成功：`(start, width)`
 - 未分配：`(-1, 0)`
 
-## 4. 输入输出语义
+## 输入输出语义
 
 输入：
 
@@ -46,7 +46,7 @@ def pack_spectrum(user_demand_slots, n_slots, guard_slots=1, seed=0):
 - `alloc[i] = (start, width)`：用户 `i` 被接纳并放置。
 - `alloc[i] = (-1, 0)`：用户 `i` 被拒绝。
 
-## 5. 严格合法性约束
+## 严格合法性约束
 
 `verification` 会严格检查几何合法性：
 
@@ -58,7 +58,7 @@ def pack_spectrum(user_demand_slots, n_slots, guard_slots=1, seed=0):
 
 几何不合法时，即使其它指标高，也会判 invalid。
 
-## 6. verification 评测流程与指标
+## verification 评测流程与指标
 
 固定场景（`seed=99`）是“难打包”分布：
 
@@ -89,9 +89,9 @@ valid 门槛：
 - `ber_pass_ratio >= 0.80`
 - 几何合法
 
-## 7. Baseline（低依赖）
+## Baseline（低依赖）
 
-`baseline/solver.py` 当前用 First-Fit Decreasing：
+`baseline/init.py` 当前用 First-Fit Decreasing：
 
 1. 按请求宽度从大到小排序，
 2. 为每个请求找第一个可行位置，
@@ -99,7 +99,7 @@ valid 门槛：
 
 实现简单确定，但容易产生碎片，影响后续接纳率。
 
-## 8. Oracle（更强参考）
+## Oracle（更强参考）
 
 `verification/oracle.py` 提供多种更强后端：
 
@@ -114,7 +114,7 @@ valid 门槛：
 - `exact_geometry` 仅对几何子目标精确，不保证最终总分最优，
 - 实测里 `hybrid` 常常在总分上更强。
 
-## 9. `verification/outputs/` 文件说明
+## `verification/outputs/` 文件说明
 
 每次运行会生成：
 
@@ -135,7 +135,7 @@ valid 门槛：
 
 这张图很适合快速定位碎片化和接纳率问题。
 
-## 10. 工程意义
+## 工程意义
 
 这个任务的目标和实际资源经济性高度一致：
 

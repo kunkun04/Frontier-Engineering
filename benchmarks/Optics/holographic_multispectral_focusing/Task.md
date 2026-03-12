@@ -1,10 +1,10 @@
 # Holographic H3 Specification: Multi-Wavelength Focusing/Splitting
 
-## 0. Who this doc is for
+## Who this doc is for
 
 This task is written for engineers who know optimization/code, not necessarily optics.
 
-## 1. Engineering background (plain-language)
+## Engineering background (plain-language)
 
 Different wavelengths (colors) naturally propagate differently.
 
@@ -29,28 +29,28 @@ Economic value:
 
 - better multi-wavelength behavior improves product quality without adding extra hardware channels.
 
-## 2. What you need to do
+## What you need to do
 
-Improve baseline optimization in `baseline/solver.py` to get higher score under shared-hardware constraints.
+Improve baseline optimization in `baseline/init.py` to get higher score under shared-hardware constraints.
 
 Editable target:
 
-- `baseline/solver.py`
+- `baseline/init.py`
 
 Read-only in challenge setup:
 
 - `verification/evaluate.py`
 - `verification/reference_solver.py`
 
-## 3. Core file/function to modify
+## Core file/function to modify
 
 Main function:
 
-- `solve(spec, device=None, seed=0)` in `baseline/solver.py`
+- `solve(spec, device=None, seed=0)` in `baseline/init.py`
 
 Keep return structure unchanged.
 
-## 4. Input contract (`spec`)
+## Input contract (`spec`)
 
 Key fields:
 
@@ -66,7 +66,7 @@ Evaluator-injected constants:
 - `valid_*` thresholds,
 - reference comparison margins.
 
-## 5. Output contract (`solve`)
+## Output contract (`solve`)
 
 Must return at least:
 
@@ -77,7 +77,7 @@ Must return at least:
 
 Evaluator will run each wavelength through the returned system and compute metrics.
 
-## 6. Baseline implementation (current)
+## Baseline implementation (current)
 
 Current baseline is intentionally minimal:
 
@@ -91,7 +91,7 @@ Missing pieces (deliberate):
 - no explicit spectral-ratio matching,
 - no advanced initialization.
 
-## 7. Oracle implementation (current)
+## Oracle implementation (current)
 
 Reference is stronger and less hardware-constrained:
 
@@ -103,7 +103,7 @@ Reference is stronger and less hardware-constrained:
 
 Because phases are wavelength-specific (not one strictly shared mask), this behaves as an upper-bound reference.
 
-## 8. Metrics and score (0~1)
+## Metrics and score (0~1)
 
 Per wavelength `i`:
 
@@ -133,7 +133,7 @@ Interpretation:
 - high score needs both spatial correctness and spectral correctness,
 - strong spectral ratio with poor spatial map (or inverse) cannot get top score.
 
-## 9. Valid and better-than-baseline logic
+## Valid and better-than-baseline logic
 
 Baseline is valid iff:
 
@@ -146,7 +146,7 @@ Reference is better iff:
 - `reference_mean_score >= baseline_mean_score + better_score_margin`
 - `reference_mean_shape_cosine >= baseline_mean_shape_cosine + better_shape_margin`
 
-## 10. Verification artifacts and their meaning
+## Verification artifacts and their meaning
 
 Outputs under `verification/artifacts/`:
 
@@ -164,7 +164,7 @@ Typical debugging signals:
 - high crosstalk: need stronger designated-vs-other suppression,
 - low shape cosine: improve initialization/objective balance.
 
-## 11. Run verification
+## Run verification
 
 ```bash
 PY=python3

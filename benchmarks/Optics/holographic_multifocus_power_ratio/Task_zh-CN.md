@@ -1,10 +1,10 @@
 # 可微全息 H1 规范：多焦点相对光强配比控制
 
-## 0. 适用读者
+## 适用读者
 
 本文档默认你有 **CS 背景**（优化、张量、训练循环），但**没有光学专业背景**。
 
-## 1. 工程背景（非光学口吻）
+## 工程背景（非光学口吻）
 
 你可以把这个任务理解为“物理版图像生成器”：
 
@@ -24,25 +24,25 @@
 
 - 更高能量利用率和更准的分配，可提升产线效率与良率。
 
-## 2. 你要做的事
+## 你要做的事
 
 你需要改进 baseline 的优化策略，使其分数更高。
 
 任务约束：
 
-- 允许修改：`baseline/solver.py`
+- 允许修改：`baseline/init.py`
 - `verification/` 下评测和 oracle 视为只读。
 
-## 3. 核心修改文件/函数
+## 核心修改文件/函数
 
 主要修改点：
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - 核心函数：`solve(spec, device=None, seed=0)`
 
 你可以改同文件内辅助函数，但必须保持返回字段与 evaluator 兼容。
 
-## 4. 输入协议（`spec`）
+## 输入协议（`spec`）
 
 `verification/evaluate.py` 会基于 `make_default_spec()` 构造 `spec`，并注入评测常量。
 
@@ -64,7 +64,7 @@
 - `valid_ratio_mae_max`, `valid_efficiency_min`, `valid_score_min`
 - `better_score_margin`, `better_shape_margin`
 
-## 5. 输出协议（`solve` 返回）
+## 输出协议（`solve` 返回）
 
 `solve` 至少返回以下键：
 
@@ -76,7 +76,7 @@
 
 缺失这些键或几何不匹配会导致评测失败。
 
-## 6. Baseline 当前实现
+## Baseline 当前实现
 
 当前 baseline 有意简化：
 
@@ -92,7 +92,7 @@
 - 没有显式惩罚泄露，
 - 没有分阶段优化策略。
 
-## 7. Oracle 当前实现
+## Oracle 当前实现
 
 `verification/reference_solver.py` 更强，允许第三方库：
 
@@ -106,7 +106,7 @@
 
 它是工程上更强的参考解，不是 baseline。
 
-## 8. 指标与分数（0~1，越高越好）
+## 指标与分数（0~1，越高越好）
 
 在输出强度上计算：
 
@@ -129,7 +129,7 @@
 - `0.2~0.4`：部分可用，但明显有短板；
 - 接近 `0`：基本没有实现目标。
 
-## 9. valid 与 better 规则
+## valid 与 better 规则
 
 `baseline valid=True` 需要同时满足：
 
@@ -142,7 +142,7 @@
 - `reference_score >= baseline_score + better_score_margin`
 - `reference_shape_cosine >= baseline_shape_cosine + better_shape_margin`
 
-## 10. 评测输出文件说明（artifacts）
+## 评测输出文件说明（artifacts）
 
 `verification/evaluate.py` 会写入 `verification/artifacts/`：
 
@@ -156,7 +156,7 @@
   - 焦点功率比例柱状图（目标 vs baseline vs reference），
   - 训练 loss 曲线。
 
-## 11. 运行方式
+## 运行方式
 
 ```bash
 PY=python3

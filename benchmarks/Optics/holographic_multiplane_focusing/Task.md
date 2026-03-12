@@ -1,10 +1,10 @@
 # Holographic H2 Specification: Multi-Plane Focusing
 
-## 0. Who this doc is for
+## Who this doc is for
 
 You are expected to understand optimization/programming, but not optical physics.
 
-## 1. Engineering background (plain-language)
+## Engineering background (plain-language)
 
 Task 1 is single-plane focusing. Task 2 adds **depth**.
 
@@ -25,29 +25,29 @@ Economic value:
 
 - one optical component serving multiple depth functions reduces system complexity and calibration cost.
 
-## 2. What you need to do
+## What you need to do
 
 Improve optimization in baseline so that all planes are satisfied better under the task score.
 
 Editable area:
 
-- `baseline/solver.py`
+- `baseline/init.py`
 
 Read-only for challenge use:
 
 - `verification/evaluate.py`
 - `verification/reference_solver.py`
 
-## 3. Core file/function to modify
+## Core file/function to modify
 
 Main function:
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - `solve(spec, device=None, seed=0)`
 
 Keep output structure compatible with evaluator.
 
-## 4. Input contract (`spec`)
+## Input contract (`spec`)
 
 Main fields:
 
@@ -65,7 +65,7 @@ Evaluator also injects:
 - validity thresholds,
 - reference comparison margins.
 
-## 5. Output contract (from `solve`)
+## Output contract (from `solve`)
 
 Required keys:
 
@@ -77,7 +77,7 @@ Required keys:
 
 Evaluator uses `system.measure_at_z(input_field, z=plane_z)` for each plane.
 
-## 6. Baseline implementation (current)
+## Baseline implementation (current)
 
 Current baseline is intentionally weak:
 
@@ -92,7 +92,7 @@ What it misses:
 - no explicit leakage/efficiency control,
 - no adaptive weighting for hard planes.
 
-## 7. Oracle implementation (current)
+## Oracle implementation (current)
 
 `verification/reference_solver.py` is stronger:
 
@@ -106,7 +106,7 @@ What it misses:
 
 This is a stronger engineering baseline for comparison.
 
-## 8. Metrics and score (0~1)
+## Metrics and score (0~1)
 
 For each plane `m`:
 
@@ -135,7 +135,7 @@ Interpretation:
 - score near `1`: high efficiency + accurate ratios + close target maps across planes,
 - score near `0`: failing on one or more planes severely.
 
-## 9. Valid and better-than-baseline logic
+## Valid and better-than-baseline logic
 
 Baseline `valid=True` iff:
 
@@ -148,7 +148,7 @@ Reference `better_than_baseline=True` iff:
 - `reference_mean_score >= baseline_mean_score + better_score_margin`
 - `reference_mean_shape_cosine >= baseline_mean_shape_cosine + better_shape_margin`
 
-## 10. Verification artifacts and how to read them
+## Verification artifacts and how to read them
 
 Generated under `verification/artifacts/`:
 
@@ -165,7 +165,7 @@ How to debug quickly:
 - if efficiency is low everywhere: improve leakage/energy concentration objective,
 - if only one plane fails: use plane-aware weighting/curriculum.
 
-## 11. Run verification
+## Run verification
 
 ```bash
 PY=python3

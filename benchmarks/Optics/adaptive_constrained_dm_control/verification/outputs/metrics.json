@@ -1,7 +1,7 @@
 {
   "task": "task1_constrained_dm_control",
   "benchmark_profile": "v3_delay_and_model_mismatch",
-  "candidate_module": "/DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_constrained_dm_control/baseline/controller.py",
+  "candidate_module": "/DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_constrained_dm_control/baseline/init.py",
   "oracle_backend": "scipy.optimize.lsq_linear (bounded ridge least squares)",
   "saturation_weight": 0.5,
   "actuator_lag": 0.72,

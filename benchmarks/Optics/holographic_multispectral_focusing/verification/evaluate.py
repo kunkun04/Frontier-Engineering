@@ -204,7 +204,7 @@ def main() -> None:
     artifacts_dir = Path(args.artifacts_dir)
     artifacts_dir.mkdir(parents=True, exist_ok=True)
 
-    baseline_module = _load_module(TASK_DIR / "baseline" / "solver.py", "task3_baseline_solver")
+    baseline_module = _load_module(TASK_DIR / "baseline" / "init.py", "task3_baseline_solver")
     reference_module = _load_module(THIS_DIR / "reference_solver.py", "task3_reference_solver")
 
     spec = _make_spec(baseline_module, args)

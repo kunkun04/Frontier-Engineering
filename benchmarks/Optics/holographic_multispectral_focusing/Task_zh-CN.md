@@ -1,10 +1,10 @@
 # 可微全息 H3 规范：多波长聚焦/分束
 
-## 0. 适用读者
+## 适用读者
 
 默认你熟悉优化和代码，但没有光学背景。
 
-## 1. 工程背景（通俗版）
+## 工程背景（通俗版）
 
 不同波长（可理解为不同颜色）传播行为不同。
 
@@ -29,28 +29,28 @@
 
 - 多波长性能更好，可在不增加硬件通道的前提下提升成像/传输品质。
 
-## 2. 你要做的事
+## 你要做的事
 
-改进 `baseline/solver.py` 的优化流程，在共享硬件约束下提升分数。
+改进 `baseline/init.py` 的优化流程，在共享硬件约束下提升分数。
 
 可编辑：
 
-- `baseline/solver.py`
+- `baseline/init.py`
 
 挑战中通常只读：
 
 - `verification/evaluate.py`
 - `verification/reference_solver.py`
 
-## 3. 核心修改文件/函数
+## 核心修改文件/函数
 
 主函数：
 
-- `baseline/solver.py` 的 `solve(spec, device=None, seed=0)`
+- `baseline/init.py` 的 `solve(spec, device=None, seed=0)`
 
 保持返回字段不变。
 
-## 4. 输入协议（`spec`）
+## 输入协议（`spec`）
 
 关键字段：
 
@@ -66,7 +66,7 @@
 - `valid_*` 阈值，
 - reference 对比 margin。
 
-## 5. 输出协议（`solve` 返回）
+## 输出协议（`solve` 返回）
 
 至少返回：
 
@@ -77,7 +77,7 @@
 
 评测会把每个波长输入都通过返回的系统计算指标。
 
-## 6. Baseline 当前实现
+## Baseline 当前实现
 
 baseline 目前刻意简化：
 
@@ -91,7 +91,7 @@ baseline 目前刻意简化：
 - 不显式约束光谱比例，
 - 无高级初始化。
 
-## 7. Oracle 当前实现
+## Oracle 当前实现
 
 reference 更强，且硬件约束更宽松：
 
@@ -103,7 +103,7 @@ reference 更强，且硬件约束更宽松：
 
 因为允许波长特定相位（而非严格共享掩模），它是上界对照解。
 
-## 8. 指标与分数（0~1）
+## 指标与分数（0~1）
 
 每个波长 `i`：
 
@@ -133,7 +133,7 @@ reference 更强，且硬件约束更宽松：
 - 高分必须同时满足空间目标和光谱目标，
 - 单一维度很好、另一维度很差，最终也拿不到高分。
 
-## 9. valid 与 better 规则
+## valid 与 better 规则
 
 `baseline valid=True` 需满足：
 
@@ -146,7 +146,7 @@ reference 更强，且硬件约束更宽松：
 - `reference_mean_score >= baseline_mean_score + better_score_margin`
 - `reference_mean_shape_cosine >= baseline_mean_shape_cosine + better_shape_margin`
 
-## 10. 评测输出文件说明（artifacts）
+## 评测输出文件说明（artifacts）
 
 输出目录：`verification/artifacts/`
 
@@ -164,7 +164,7 @@ reference 更强，且硬件约束更宽松：
 - 串扰高：加强 designated-vs-other 抑制项，
 - shape cosine 低：改初始化或优化权重平衡。
 
-## 11. 运行方式
+## 运行方式
 
 ```bash
 PY=python3

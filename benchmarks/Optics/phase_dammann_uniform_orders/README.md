@@ -8,7 +8,7 @@ Optimize binary transition positions for order uniformity and efficiency.
 ```text
 task03_dammann_uniform_orders/
   baseline/
-    solve.py
+    init.py
   verification/
     validate.py
     outputs/
@@ -36,7 +36,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 ## Run
 
 ```bash
-PYTHONPATH=. python benchmarks/Optics/phase_dammann_uniform_orders/baseline/solve.py
+PYTHONPATH=. python benchmarks/Optics/phase_dammann_uniform_orders/baseline/init.py
 PYTHONPATH=. python benchmarks/Optics/phase_dammann_uniform_orders/verification/validate.py
 ```
 

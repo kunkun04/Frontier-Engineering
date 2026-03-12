@@ -1,6 +1,6 @@
 # Adaptive A2 Specification: Temporal Smooth Control
 
-## 1. Background for CS Readers
+## Background for CS Readers
 
 This task is a **sequential decision/control** problem.
 
@@ -12,11 +12,11 @@ In each frame you map sensor slopes `s_t` to DM commands `u_t`. Optimizing each 
 
 So the goal is not only accuracy, but also smooth temporal behavior.
 
-## 2. What You Need to Do
+## What You Need to Do
 
 Edit one function in one file:
 
-- Editable file: `baseline/controller.py`
+- Editable file: `baseline/init.py`
 - Function:
 
 ```python
@@ -28,7 +28,7 @@ Goal:
 - Maximize `score_0_to_1_higher_is_better`.
 - Keep output always valid under the interface contract.
 
-## 3. Input / Output Contract
+## Input / Output Contract
 
 ### Inputs
 
@@ -53,7 +53,7 @@ Goal:
 - `dm_commands: np.ndarray`, shape `(n_act,)`
   - Must be finite and bounded in `[-max_voltage, max_voltage]`.
 
-## 4. Verification Scenario (v3_delay_and_model_mismatch)
+## Verification Scenario (v3_delay_and_model_mismatch)
 
 The evaluator simulates a realistic temporal AO process:
 
@@ -65,7 +65,7 @@ The evaluator simulates a realistic temporal AO process:
 
 A good controller should avoid overreacting to delayed data and should reduce command slew.
 
-## 5. Metrics and Score (0 to 1, Higher is Better)
+## Metrics and Score (0 to 1, Higher is Better)
 
 Leaderboard target:
 - `score_0_to_1_higher_is_better` in `[0, 1]`
@@ -90,9 +90,9 @@ Anchors:
 
 `raw_cost_lower_is_better` is diagnostic only.
 
-## 6. Baseline Implementation
+## Baseline Implementation
 
-Current baseline (`baseline/controller.py`):
+Current baseline (`baseline/init.py`):
 1. Compute `u = reconstructor @ slopes`
 2. Clip to `[-Vmax, Vmax]`
 
@@ -101,7 +101,7 @@ Weakness:
 - Ignores smoothness objective
 - Does not compensate delayed sensing
 
-## 7. Oracle / Reference Implementation
+## Oracle / Reference Implementation
 
 Reference (`verification/reference_controller.py`) uses an analytical smooth controller:
 
@@ -115,12 +115,12 @@ Reference (`verification/reference_controller.py`) uses an analytical smooth con
 
 This is still lightweight (no heavy external optimizer) but significantly stronger than frame-wise independent control.
 
-## 8. Verification Outputs: What They Mean
+## Verification Outputs: What They Mean
 
 Running:
 
 ```bash
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+python verification/evaluate.py
 ```
 
 produces in `verification/outputs/`:
@@ -134,7 +134,7 @@ produces in `verification/outputs/`:
   - Representative phase/residual/PSF visualization for baseline and reference.
   - Helps verify that better score corresponds to physically better correction.
 
-## 9. Dependency and Policy
+## Dependency and Policy
 
 - Baseline should remain lightweight (`numpy` + provided matrices).
 - Reference is analytical and does not require third-party optimization solver.

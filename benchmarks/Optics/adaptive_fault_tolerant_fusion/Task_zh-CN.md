@@ -1,6 +1,6 @@
 # 自适应光学 A4 说明：故障容忍的多传感器融合
 
-## 1. 给 CS 背景读者的领域背景
+## 给 CS 背景读者的领域背景
 
 这是一个**鲁棒估计 + 控制**问题。
 
@@ -8,11 +8,11 @@
 
 核心挑战是：**先做鲁棒融合，再做 DM 控制**。
 
-## 2. 你需要做什么
+## 你需要做什么
 
 只修改一个函数：
 
-- 文件：`baseline/controller.py`
+- 文件：`baseline/init.py`
 - 目标函数：
 
 ```python
@@ -24,7 +24,7 @@ def fuse_and_compute_dm_commands(slopes_multi, reconstructor, control_model, pre
 - 在重故障场景下提升 `score_0_to_1_higher_is_better`。
 - 保持输出始终 valid。
 
-## 3. 输入输出契约
+## 输入输出契约
 
 ### 输入
 
@@ -45,7 +45,7 @@ def fuse_and_compute_dm_commands(slopes_multi, reconstructor, control_model, pre
 - `dm_commands: np.ndarray`，形状 `(n_act,)`
   - 必须有限且满足 `[-max_voltage, max_voltage]`。
 
-## 4. Verification 场景（v3_fault_stress）
+## Verification 场景（v3_fault_stress）
 
 `verification/evaluate.py` 构造故障主导的压力测试：
 
@@ -60,7 +60,7 @@ def fuse_and_compute_dm_commands(slopes_multi, reconstructor, control_model, pre
 
 该设置专门用来区分“鲁棒融合”和“简单平均”。
 
-## 5. 指标与分数（0~1，越高越好）
+## 指标与分数（0~1，越高越好）
 
 排行榜字段：
 - `score_0_to_1_higher_is_better`，范围 `[0, 1]`
@@ -86,9 +86,9 @@ utility 加权分数：
 
 `raw_cost_lower_is_better` 仅用于诊断分析。
 
-## 6. Baseline 实现
+## Baseline 实现
 
-当前 baseline（`baseline/controller.py`）：
+当前 baseline（`baseline/init.py`）：
 1. `fused = mean(slopes_multi, axis=0)`
 2. `u = reconstructor @ fused`
 3. `clip` 到边界
@@ -96,7 +96,7 @@ utility 加权分数：
 弱点：
 - 均值融合对异常值极其敏感，容易被坏通道拖垮。
 
-## 7. Oracle / Reference 实现
+## Oracle / Reference 实现
 
 reference（`verification/reference_controller.py`）使用异常检测辅助融合：
 
@@ -112,12 +112,12 @@ reference（`verification/reference_controller.py`）使用异常检测辅助融
 为什么更强：
 - 它显式建模传感器异常，而不是默认所有通道同等可信。
 
-## 8. verification/outputs 文件作用
+## verification/outputs 文件作用
 
 运行：
 
 ```bash
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+python verification/evaluate.py
 ```
 
 会在 `verification/outputs/` 生成：
@@ -132,7 +132,7 @@ reference（`verification/reference_controller.py`）使用异常检测辅助融
   - 代表样本的 phase/residual/PSF 对比图。
   - 用于确认指标收益是否对应可见残差改善。
 
-## 9. 依赖与约束策略
+## 依赖与约束策略
 
 - Baseline 期望保持轻量（`numpy` + 给定矩阵）。
 - Reference 允许使用第三方 `scikit-learn`（`IsolationForest`）。

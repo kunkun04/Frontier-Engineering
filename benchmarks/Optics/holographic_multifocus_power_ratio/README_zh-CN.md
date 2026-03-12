@@ -13,7 +13,7 @@
 
 ## agent 需要修改的内容
 
-- 目标文件：`baseline/solver.py`
+- 目标文件：`baseline/init.py`
 - 任务设定下其它文件默认只读。
 
 ## 目录结构
@@ -21,7 +21,7 @@
 ```text
 task1_multifocus_power_ratio/
   baseline/
-    solver.py
+    init.py
   verification/
     evaluate.py
     reference_solver.py

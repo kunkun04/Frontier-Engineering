@@ -18,7 +18,7 @@ This task optimizes a practical objective that balances correction quality and c
 ```text
 task2_temporal_smooth_control/
   baseline/
-    controller.py
+    init.py
   verification/
     evaluate.py
     reference_controller.py
@@ -31,7 +31,7 @@ task2_temporal_smooth_control/
 
 ## Environment Dependencies
 
-- Python: `3.10+` (tested with `/data_storage/chihh2311/.conda/envs/aotools/bin/python`)
+- Python: `3.10+` (tested with `python`)
 - Baseline candidate runtime: `numpy`
 - Verification runtime: `numpy`, `matplotlib`, local `aotools` package (this repository)
 - Task-specific oracle dependency: none (reference is analytical and does not require extra third-party solver)
@@ -40,8 +40,8 @@ task2_temporal_smooth_control/
 ## How to Run
 
 ```bash
-cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_temporal_smooth_control
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+cd benchmarks/Optics/adaptive_temporal_smooth_control
+python verification/evaluate.py
 ```
 
 ## Outputs
@@ -52,6 +52,6 @@ cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_te
 
 ## Baseline vs Oracle Policy
 
-- Baseline target is `baseline/controller.py` and should avoid heavy third-party solvers.
+- Baseline target is `baseline/init.py` and should avoid heavy third-party solvers.
 - Reference oracle is a delay-compensated analytical smooth controller (still no external optimizer).
 - Current profile is `v3_delay_and_model_mismatch`, including delayed sensing and actuator constraints.

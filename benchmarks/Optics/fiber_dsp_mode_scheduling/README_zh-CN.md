@@ -11,12 +11,12 @@
 
 ## Agent 可编辑目标
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - 函数：`choose_dsp_mode(...)`
 
 ## 目录结构
 
-- `baseline/solver.py`: 低SNR优先DBP的基础策略
+- `baseline/init.py`: 低SNR优先DBP的基础策略
 - `verification/oracle.py`: 更优参考（`auto/exact/heuristic`，CP-SAT + DP回退）
 - `verification/run_validation.py`: valid 检查、评分、图表
 - `Task.md`: 任务完整定义
@@ -31,7 +31,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 
 必需依赖（baseline + verification）：
 
-- 推荐解释器：`/data_storage/chihh2311/.conda/envs/opticommpy/bin/python`
+- 推荐解释器：`python`
 - `numpy`
 - `matplotlib`
 - `optic`（本仓库内 OptiCommPy 包，verification 通过它调用 `theoryBER`）
@@ -43,7 +43,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 ## 运行
 
 ```bash
-/data_storage/chihh2311/.conda/envs/opticommpy/bin/python \
+python \
   benchmarks/Optics/fiber_dsp_mode_scheduling/verification/run_validation.py
 ```
 

@@ -1,6 +1,6 @@
 # Phase DOE P1 Contract: Hard Weighted Multi-Spot
 
-## 1. Background (for CS engineers)
+## Background (for CS engineers)
 You can view this task as a **2D optimization problem**:
 - Input: a phase map `phase[y, x]`
 - Black-box forward model: `phase -> far-field intensity`
@@ -8,16 +8,16 @@ You can view this task as a **2D optimization problem**:
 
 In optics terms, this is phase-only Fourier holography. In ML/optimization terms, this is a non-convex objective over a 2D array.
 
-## 2. What You Need To Do
-Improve the baseline in `baseline/solve.py` so that the generated phase map achieves better weighted spot distribution.
+## What You Need To Do
+Improve the baseline in `baseline/init.py` so that the generated phase map achieves better weighted spot distribution.
 
 Recommended modification point:
 - `solve_baseline(problem)`
 
 You can also add helper functions in the same file, but keep the public API unchanged.
 
-## 3. Editable Boundary
-- Editable: `baseline/solve.py`
+## Editable Boundary
+- Editable: `baseline/init.py`
 - Read-only (evaluation logic): `verification/validate.py`
 
 Required API that verifier imports:
@@ -25,8 +25,8 @@ Required API that verifier imports:
 - `solve_baseline(problem: dict) -> np.ndarray`
 - `forward_intensity(problem: dict, phase: np.ndarray) -> np.ndarray`
 
-## 4. Input / Output Contract
-### 4.1 Input to `solve_baseline(problem)`
+## Input / Output Contract
+### Input to `solve_baseline(problem)`
 `problem` is a dict built by `build_problem`, with key fields:
 - `x`, `y`: 1D pixel coordinates (`np.arange(N)`)
 - `aperture_amp`: aperture mask, shape `(N, N)`
@@ -34,11 +34,11 @@ Required API that verifier imports:
 - `weights`: normalized target ratios, shape `(K,)`
 - `cfg`: config dict (`slm_pixels`, grid sizes, etc.)
 
-### 4.2 Output from `solve_baseline(problem)`
+### Output from `solve_baseline(problem)`
 - `phase`: float array of shape `(N, N)`
 - Interpreted as phase in radians for each SLM pixel
 
-## 5. Core Function to Modify
+## Core Function to Modify
 Primary function:
 - `solve_baseline(problem)`
 
@@ -48,7 +48,7 @@ Verifier flow:
 3. compute metrics and score
 4. compare with oracle
 
-## 6. Baseline Implementation (current)
+## Baseline Implementation (current)
 Baseline is intentionally simple:
 1. For each target spot, create one plane-wave term in complex field
 2. Weighted coherent sum over all spots
@@ -56,14 +56,14 @@ Baseline is intentionally simple:
 
 This is fast and deterministic but not iterative, so dense non-uniform targets are hard.
 
-## 7. Oracle Implementation
+## Oracle Implementation
 Oracle in verifier uses `slmsuite` weighted Gerchberg-Saxton:
 - `Hologram.optimize(method="WGS-Kim")`
 - Iteratively updates hologram to better match target energy distribution
 
 So oracle is a stronger iterative solver; baseline is non-iterative.
 
-## 8. Metrics and Score (Higher Is Better)
+## Metrics and Score (Higher Is Better)
 Verifier computes:
 - `ratio_mae`: mean absolute error between achieved spot ratios and target ratios (lower better)
 - `cv_spots`: coefficient of variation of per-spot energy (lower better)
@@ -79,13 +79,13 @@ Then:
 
 Range: `0 ~ 100` (higher is better).
 
-## 9. Valid Criteria
+## Valid Criteria
 Baseline is valid if all true:
 - `score_pct >= 20`
 - `efficiency >= 0.45`
 - `min_peak_ratio > 0`
 
-## 10. Expected Optimization Space
+## Expected Optimization Space
 Typical improvements that work:
 - iterative phase retrieval (GS/WGS variants)
 - per-spot feedback correction

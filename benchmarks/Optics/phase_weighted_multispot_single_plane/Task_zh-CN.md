@@ -1,6 +1,6 @@
 # 相位 DOE P1 说明：高难度加权多焦点
 
-## 1. 背景（面向 CS 同学）
+## 背景（面向 CS 同学）
 你可以把这个任务理解为一个 **二维数组优化问题**：
 - 输入：相位矩阵 `phase[y, x]`
 - 前向黑盒：`phase -> 远场强度图`
@@ -8,16 +8,16 @@
 
 光学上是纯相位 Fourier 全息；算法上是非凸优化问题。
 
-## 2. 你要做什么
-改进 `baseline/solve.py`，让生成的相位图在“稠密、多目标、非均匀配光”场景下取得更高分。
+## 你要做什么
+改进 `baseline/init.py`，让生成的相位图在“稠密、多目标、非均匀配光”场景下取得更高分。
 
 建议主要修改：
 - `solve_baseline(problem)`
 
 可以在同文件增加辅助函数，但不要改公共接口。
 
-## 3. 可修改边界
-- 可修改：`baseline/solve.py`
+## 可修改边界
+- 可修改：`baseline/init.py`
 - 只读（评测逻辑）：`verification/validate.py`
 
 评测依赖接口：
@@ -25,8 +25,8 @@
 - `solve_baseline(problem: dict) -> np.ndarray`
 - `forward_intensity(problem: dict, phase: np.ndarray) -> np.ndarray`
 
-## 4. 输入输出约定
-### 4.1 `solve_baseline(problem)` 的输入
+## 输入输出约定
+### `solve_baseline(problem)` 的输入
 `problem` 由 `build_problem` 生成，关键字段：
 - `x`, `y`：像素坐标（一维数组）
 - `aperture_amp`：孔径掩膜，形状 `(N, N)`
@@ -34,10 +34,10 @@
 - `weights`：归一化目标权重，形状 `(K,)`
 - `cfg`：配置参数（像素数、网格规模等）
 
-### 4.2 `solve_baseline(problem)` 的输出
+### `solve_baseline(problem)` 的输出
 - `phase`：形状 `(N, N)` 的浮点相位矩阵（单位弧度）
 
-## 5. 核心可改函数
+## 核心可改函数
 核心修改点：
 - `solve_baseline(problem)`
 
@@ -47,7 +47,7 @@
 3. 计算指标和分数
 4. 与 oracle 对比
 
-## 6. Baseline 当前实现
+## Baseline 当前实现
 当前 baseline 是有意简化的：
 1. 每个目标焦点构造一个复平面波项
 2. 按权重做相干叠加
@@ -55,14 +55,14 @@
 
 优点是快；缺点是不迭代，面对稠密非均匀目标容易失配。
 
-## 7. Oracle 当前实现
+## Oracle 当前实现
 评测内置 oracle 使用 `slmsuite` 的加权 GS：
 - `Hologram.optimize(method="WGS-Kim")`
 - 通过迭代更新来逼近目标配光
 
 因此 oracle 是强迭代方法，baseline 是弱非迭代方法。
 
-## 8. 指标与分数（越高越好）
+## 指标与分数（越高越好）
 评测计算：
 - `ratio_mae`：实际焦点比例与目标比例的平均绝对误差（越小越好）
 - `cv_spots`：焦点能量变异系数（越小越好）
@@ -78,13 +78,13 @@
 
 范围：`0 ~ 100`，越高越好。
 
-## 9. valid 判定
+## valid 判定
 baseline 同时满足以下条件才算 valid：
 - `score_pct >= 20`
 - `efficiency >= 0.45`
 - `min_peak_ratio > 0`
 
-## 10. 可行优化方向
+## 可行优化方向
 常见有效改法：
 - GS/WGS 类迭代相位检索
 - 按焦点误差做反馈修正

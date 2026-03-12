@@ -1,6 +1,6 @@
 # 光通信 F3 说明：DSP 模式调度（EDC vs DBP）
 
-## 1. 背景（面向 CS 背景）
+## 背景（面向 CS 背景）
 
 相干光接收机里常见两种 DSP 处理模式：
 
@@ -15,16 +15,16 @@
 - 最大化整体加权效用，
 - 同时满足全局时延预算（可选 DBP 用户数量上限）。
 
-## 2. 你要做什么
+## 你要做什么
 
 只改一个函数：
 
-- 可编辑文件：`baseline/solver.py`
+- 可编辑文件：`baseline/init.py`
 - 目标函数：`choose_dsp_mode(...)`
 
 `verification/` 下脚本和 oracle 保持只读。
 
-## 3. 函数接口
+## 函数接口
 
 ```python
 def choose_dsp_mode(user_features, latency_budget_s, max_dbp_users=None, seed=0):
@@ -36,7 +36,7 @@ def choose_dsp_mode(user_features, latency_budget_s, max_dbp_users=None, seed=0)
 - `0` = EDC
 - `1` = DBP
 
-## 4. 输入输出语义
+## 输入输出语义
 
 `user_features` 是按用户对齐的数组字典：
 
@@ -57,7 +57,7 @@ def choose_dsp_mode(user_features, latency_budget_s, max_dbp_users=None, seed=0)
 
 - `mode[u]`：用户 `u` 的模式选择（0/1）。
 
-## 5. 严格合法性约束
+## 严格合法性约束
 
 1. 输出必须包含 `mode`
 2. `mode.shape == (U,)`
@@ -68,7 +68,7 @@ def choose_dsp_mode(user_features, latency_budget_s, max_dbp_users=None, seed=0)
 - 总时延不超预算容差
 - BER 通过率不低于门槛
 
-## 6. verification 评测流程与指标
+## verification 评测流程与指标
 
 固定场景（`seed=7`）是“结构化困难样本”：
 
@@ -104,9 +104,9 @@ valid 门槛：
 - `latency <= budget * 1.001`
 - `ber_pass_ratio >= 0.18`
 
-## 7. Baseline（低依赖）
+## Baseline（低依赖）
 
-`baseline/solver.py` 当前逻辑：
+`baseline/init.py` 当前逻辑：
 
 1. 先按 SNR 从低到高排序；
 2. 依次给低 SNR 用户分配 DBP；
@@ -114,7 +114,7 @@ valid 门槛：
 
 简单易懂，但没有全局最优意识。
 
-## 8. Oracle（更强参考）
+## Oracle（更强参考）
 
 `verification/oracle.py` 把问题建模为背包风格优化：
 
@@ -130,7 +130,7 @@ Oracle 模式：
 - `--oracle-mode heuristic`：强制 DP
 - `--oracle-mode auto`：先 CP-SAT，失败回退 DP
 
-## 9. `verification/outputs/` 文件说明
+## `verification/outputs/` 文件说明
 
 每次运行会输出：
 
@@ -151,7 +151,7 @@ Oracle 模式：
 
 可用于判断 DBP 是否分给了“高收益用户”。
 
-## 10. 工程意义
+## 工程意义
 
 这题对应真实接收机资源调度：
 

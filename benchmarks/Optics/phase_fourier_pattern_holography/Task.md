@@ -1,6 +1,6 @@
 # Phase DOE P2 Contract: Hard Fourier Pattern Holography
 
-## 1. Background (for CS engineers)
+## Background (for CS engineers)
 This task is image reconstruction under constraints:
 - Decision variable: phase map `phase[y, x]`
 - Forward model: FFT-based propagation to intensity image
@@ -8,14 +8,14 @@ This task is image reconstruction under constraints:
 
 Equivalent CS view: constrained inverse problem / non-convex optimization on a 2D field.
 
-## 2. What You Need To Do
-Improve `baseline/solve.py` so the reconstructed intensity image better fits target structure and suppresses leakage in designated dark regions.
+## What You Need To Do
+Improve `baseline/init.py` so the reconstructed intensity image better fits target structure and suppresses leakage in designated dark regions.
 
 Primary function to optimize:
 - `solve_baseline(problem, seed=None)`
 
-## 3. Editable Boundary
-- Editable: `baseline/solve.py`
+## Editable Boundary
+- Editable: `baseline/init.py`
 - Read-only: `verification/validate.py`
 
 Required API:
@@ -23,24 +23,24 @@ Required API:
 - `solve_baseline(problem: dict, seed: int | None = None) -> np.ndarray`
 - `forward_intensity(problem: dict, phase: np.ndarray) -> np.ndarray`
 
-## 4. Input / Output Contract
-### 4.1 Input `problem`
+## Input / Output Contract
+### Input `problem`
 Key fields:
 - `x`, `y`: pixel coordinates
 - `aperture_amp`: aperture mask `(N, N)`
 - `target_amp`: target amplitude map `(N, N)`
 - `cfg`: includes `slm_pixels`, `seed`, etc.
 
-### 4.2 Output
+### Output
 - phase map `phase` with shape `(N, N)` (radians)
 
-## 5. Core Function to Modify
+## Core Function to Modify
 Main modification point:
 - `solve_baseline(problem, seed=None)`
 
 The verifier always calls this function, then evaluates metrics on the produced intensity.
 
-## 6. Baseline Implementation (current)
+## Baseline Implementation (current)
 Baseline is one-shot and non-iterative:
 1. attach random phase to target amplitude
 2. inverse FFT once
@@ -48,14 +48,14 @@ Baseline is one-shot and non-iterative:
 
 Fast but weak for difficult sparse/high-contrast structures.
 
-## 7. Oracle Implementation
+## Oracle Implementation
 Oracle uses iterative weighted GS in `slmsuite`:
 - `Hologram.optimize(method="WGS-Kim")`
 - iterative amplitude/phase correction
 
 This usually improves structure fidelity and dark-zone control.
 
-## 8. Metrics and Score (Higher Is Better)
+## Metrics and Score (Higher Is Better)
 Verifier computes:
 - `nmse`: normalized RMSE between predicted intensity and target intensity
 - `energy_in_target`: energy fraction where `target_amp > 0.30`
@@ -69,13 +69,13 @@ Score formula:
 
 Range: `0 ~ 100` (higher is better).
 
-## 9. Valid Criteria
+## Valid Criteria
 Baseline is valid if:
 - `score_pct >= 20`
 - `energy_in_target >= 0.45`
 - `dark_suppression >= 0.60`
 
-## 10. Expected Optimization Space
+## Expected Optimization Space
 Typical high-impact improvements:
 - iterative phase retrieval instead of one-shot inverse
 - target-aware weighting for sparse structures

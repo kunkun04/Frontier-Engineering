@@ -17,7 +17,7 @@ This task asks for better overall efficiency.
 ```text
 task3_energy_aware_control/
   baseline/
-    controller.py
+    init.py
   verification/
     evaluate.py
     reference_controller.py
@@ -30,7 +30,7 @@ task3_energy_aware_control/
 
 ## Environment Dependencies
 
-- Python: `3.10+` (tested with `/data_storage/chihh2311/.conda/envs/aotools/bin/python`)
+- Python: `3.10+` (tested with `python`)
 - Baseline candidate runtime: `numpy`
 - Verification runtime: `numpy`, `matplotlib`, local `aotools` package (this repository)
 - Task-specific oracle dependency: `scikit-learn` (used by `verification/reference_controller.py`, `sklearn.linear_model.Lasso`)
@@ -39,8 +39,8 @@ task3_energy_aware_control/
 ## Run
 
 ```bash
-cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_energy_aware_control
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+cd benchmarks/Optics/adaptive_energy_aware_control
+python verification/evaluate.py
 ```
 
 ## Outputs
@@ -51,7 +51,7 @@ cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_en
 
 ## Baseline vs Oracle Policy
 
-- Baseline target (`baseline/controller.py`) should stay lightweight and avoid heavy third-party solvers.
+- Baseline target (`baseline/init.py`) should stay lightweight and avoid heavy third-party solvers.
 - Reference oracle uses third-party `scikit-learn` Lasso as a standardized sparse-control solver.
 - Current profile is `v3_delay_and_model_mismatch` (delayed sensing + actuator lag + model mismatch).
 - This is intentional to produce a stronger, harder-to-copy comparison target.

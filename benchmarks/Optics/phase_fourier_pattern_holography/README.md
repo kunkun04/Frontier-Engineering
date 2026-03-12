@@ -8,7 +8,7 @@ Phase-only reconstruction of a sparse high-contrast target with keep-out dark re
 ```text
 task02_fourier_pattern_holography/
   baseline/
-    solve.py
+    init.py
   verification/
     validate.py
     outputs/
@@ -33,7 +33,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 ## Run
 
 ```bash
-PYTHONPATH=. python benchmarks/Optics/phase_fourier_pattern_holography/baseline/solve.py
+PYTHONPATH=. python benchmarks/Optics/phase_fourier_pattern_holography/baseline/init.py
 PYTHONPATH=. python benchmarks/Optics/phase_fourier_pattern_holography/verification/validate.py
 ```
 

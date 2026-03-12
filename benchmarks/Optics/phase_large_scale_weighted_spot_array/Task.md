@@ -1,6 +1,6 @@
 # Phase DOE P4 Contract: Large-Scale Weighted Spot Array
 
-## 1. Background (for CS engineers)
+## Background (for CS engineers)
 This task is dense multi-target allocation:
 - decision variable: phase map `(N, N)`
 - forward model: Fourier propagation
@@ -8,14 +8,14 @@ This task is dense multi-target allocation:
 
 Compared with Task01, this one has larger target count and broader distribution.
 
-## 2. What You Need To Do
+## What You Need To Do
 Improve baseline phase generation so weighted spot-array quality increases.
 
 Main function to optimize:
 - `solve_baseline(problem)`
 
-## 3. Editable Boundary
-- Editable: `baseline/solve.py`
+## Editable Boundary
+- Editable: `baseline/init.py`
 - Read-only: `verification/validate.py`
 
 Required API:
@@ -23,25 +23,25 @@ Required API:
 - `solve_baseline(problem: dict) -> np.ndarray`
 - `forward_intensity(problem: dict, phase: np.ndarray) -> np.ndarray`
 
-## 4. Input / Output Contract
-### 4.1 Input `problem`
+## Input / Output Contract
+### Input `problem`
 - `x`, `y`: pixel coordinates
 - `aperture_amp`: aperture mask `(N, N)`
 - `spots`: 64 target spot coordinates
 - `weights`: normalized target ratios
 - `cfg`: SLM and grid settings
 
-### 4.2 Output
+### Output
 - `phase`: `(N, N)` phase map (radians)
 
-## 5. Baseline Implementation
+## Baseline Implementation
 Baseline currently uses direct non-iterative weighted superposition of plane-wave terms, then takes phase.
 
-## 6. Oracle Implementation
+## Oracle Implementation
 Verifier oracle uses iterative `slmsuite` WGS:
 - `Hologram.optimize(method="WGS-Kim")`
 
-## 7. Metrics and Score (Higher Is Better)
+## Metrics and Score (Higher Is Better)
 Raw metrics:
 - `ratio_mae`
 - `cv_spots`
@@ -55,13 +55,13 @@ Score formula:
 
 Range: `0 ~ 100`, higher is better.
 
-## 8. Valid Criteria
+## Valid Criteria
 - `score_pct >= 20`
 - `ratio_mae <= 0.03`
 - `cv_spots <= 1.40`
 - `efficiency >= 0.50`
 
-## 9. Practical Evolution Directions
+## Practical Evolution Directions
 - iterative weighted correction (instead of one-shot phase)
 - local phase refinement / block updates
 - adaptive balancing between ratio and efficiency

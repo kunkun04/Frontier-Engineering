@@ -8,7 +8,7 @@ Phase-only Fourier holography for a dense weighted spot field (7x7 spots, strong
 ```text
 task01_weighted_multispot_single_plane/
   baseline/
-    solve.py
+    init.py
   verification/
     validate.py
     outputs/
@@ -33,7 +33,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 ## Run
 
 ```bash
-PYTHONPATH=. python benchmarks/Optics/phase_weighted_multispot_single_plane/baseline/solve.py
+PYTHONPATH=. python benchmarks/Optics/phase_weighted_multispot_single_plane/baseline/init.py
 PYTHONPATH=. python benchmarks/Optics/phase_weighted_multispot_single_plane/verification/validate.py
 ```
 

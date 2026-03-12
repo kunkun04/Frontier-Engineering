@@ -1,6 +1,6 @@
 # Adaptive A3 Specification: Energy-Aware Control
 
-## 1. Background for CS Readers
+## Background for CS Readers
 
 This task is a **multi-objective optimization** problem.
 
@@ -12,11 +12,11 @@ In AO control, minimizing residual error alone often produces large and dense co
 
 So we optimize correction quality and command energy together.
 
-## 2. What You Need to Do
+## What You Need to Do
 
 Edit a single function:
 
-- File: `baseline/controller.py`
+- File: `baseline/init.py`
 - Function:
 
 ```python
@@ -28,7 +28,7 @@ Goal:
 - Maximize `score_0_to_1_higher_is_better`.
 - Respect validity constraints at every call.
 
-## 3. Input / Output Contract
+## Input / Output Contract
 
 ### Inputs
 
@@ -52,7 +52,7 @@ Goal:
 - `dm_commands: np.ndarray`, shape `(n_act,)`
   - Must have correct shape, finite values, and satisfy bounds.
 
-## 4. Verification Scenario (v3_delay_and_model_mismatch)
+## Verification Scenario (v3_delay_and_model_mismatch)
 
 `verification/evaluate.py` builds a dynamic benchmark with delayed sensing and mismatch:
 
@@ -63,7 +63,7 @@ Goal:
 
 This setup makes pure residual minimization less competitive than energy-aware strategies.
 
-## 5. Metrics and Score (0 to 1, Higher is Better)
+## Metrics and Score (0 to 1, Higher is Better)
 
 Leaderboard field:
 - `score_0_to_1_higher_is_better` in `[0, 1]`
@@ -91,9 +91,9 @@ Anchors:
 
 `raw_cost_lower_is_better` remains diagnostic only.
 
-## 6. Baseline Implementation
+## Baseline Implementation
 
-Current baseline (`baseline/controller.py`):
+Current baseline (`baseline/init.py`):
 1. `u = reconstructor @ slopes`
 2. `clip` to bounds
 
@@ -101,7 +101,7 @@ Weakness:
 - no explicit energy regularization
 - tends to produce high-amplitude dense commands
 
-## 7. Oracle / Reference Implementation
+## Oracle / Reference Implementation
 
 Reference (`verification/reference_controller.py`) uses third-party `scikit-learn` Lasso:
 
@@ -116,12 +116,12 @@ Why this is a strong comparator:
 - standardized sparse optimization backend
 - naturally promotes lower energy and higher sparsity
 
-## 8. Verification Outputs: What They Mean
+## Verification Outputs: What They Mean
 
 Run:
 
 ```bash
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+python verification/evaluate.py
 ```
 
 Outputs in `verification/outputs/`:
@@ -135,7 +135,7 @@ Outputs in `verification/outputs/`:
   - Representative phase/residual/PSF pair for baseline and reference.
   - Useful to visually confirm quality-energy tradeoff behavior.
 
-## 9. Dependency and Policy
+## Dependency and Policy
 
 - Baseline is expected to stay lightweight (`numpy` + provided matrices).
 - Reference is allowed to use third-party `scikit-learn`.

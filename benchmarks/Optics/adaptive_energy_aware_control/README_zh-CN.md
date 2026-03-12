@@ -17,7 +17,7 @@
 ```text
 task3_energy_aware_control/
   baseline/
-    controller.py
+    init.py
   verification/
     evaluate.py
     reference_controller.py
@@ -30,7 +30,7 @@ task3_energy_aware_control/
 
 ## 环境依赖
 
-- Python：`3.10+`（已验证解释器：`/data_storage/chihh2311/.conda/envs/aotools/bin/python`）
+- Python：`3.10+`（已验证解释器：`python`）
 - Baseline 候选实现运行依赖：`numpy`
 - Verification 评测依赖：`numpy`、`matplotlib`、仓库内本地 `aotools` 包
 - 任务特定 oracle 依赖：`scikit-learn`（`verification/reference_controller.py` 使用 `sklearn.linear_model.Lasso`）
@@ -39,8 +39,8 @@ task3_energy_aware_control/
 ## 运行方式
 
 ```bash
-cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_energy_aware_control
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+cd benchmarks/Optics/adaptive_energy_aware_control
+python verification/evaluate.py
 ```
 
 ## 输出
@@ -51,7 +51,7 @@ cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_en
 
 ## Baseline 与 Oracle 约束
 
-- Baseline 目标（`baseline/controller.py`）应保持轻量，避免重型第三方求解器。
+- Baseline 目标（`baseline/init.py`）应保持轻量，避免重型第三方求解器。
 - Reference/oracle 使用第三方 `scikit-learn` 的 Lasso 作为标准稀疏控制求解器。
 - 当前配置为 `v3_delay_and_model_mismatch`（观测延迟 + 执行器滞后 + 模型失配）。
 - 该设计用于形成更强、难以手写快速追平的对比目标。

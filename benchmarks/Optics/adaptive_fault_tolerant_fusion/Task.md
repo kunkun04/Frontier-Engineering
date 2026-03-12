@@ -1,6 +1,6 @@
 # Adaptive A4 Specification: Fault-Tolerant Sensor Fusion
 
-## 1. Background for CS Readers
+## Background for CS Readers
 
 This task is a **robust estimation + control** problem.
 
@@ -8,11 +8,11 @@ You receive measurements from multiple sensors (`n_wfs` channels). Some channels
 
 So the key challenge is: **robustly fuse multi-sensor slopes before DM control**.
 
-## 2. What You Need to Do
+## What You Need to Do
 
 Edit one function:
 
-- File: `baseline/controller.py`
+- File: `baseline/init.py`
 - Function:
 
 ```python
@@ -24,7 +24,7 @@ Goal:
 - Maximize `score_0_to_1_higher_is_better` under severe sensor faults.
 - Keep output always valid.
 
-## 3. Input / Output Contract
+## Input / Output Contract
 
 ### Inputs
 
@@ -45,7 +45,7 @@ Goal:
 - `dm_commands: np.ndarray`, shape `(n_act,)`
   - Must be finite and bounded in `[-max_voltage, max_voltage]`.
 
-## 4. Verification Scenario (v3_fault_stress)
+## Verification Scenario (v3_fault_stress)
 
 `verification/evaluate.py` uses a fault-dominant benchmark:
 
@@ -60,7 +60,7 @@ Goal:
 
 This is intentionally difficult and designed to expose non-robust fusion strategies.
 
-## 5. Metrics and Score (0 to 1, Higher is Better)
+## Metrics and Score (0 to 1, Higher is Better)
 
 Leaderboard field:
 - `score_0_to_1_higher_is_better` in `[0, 1]`
@@ -86,9 +86,9 @@ Anchors:
 
 `raw_cost_lower_is_better` is for diagnostics only.
 
-## 6. Baseline Implementation
+## Baseline Implementation
 
-Current baseline (`baseline/controller.py`):
+Current baseline (`baseline/init.py`):
 1. `fused = mean(slopes_multi, axis=0)`
 2. `u = reconstructor @ fused`
 3. clip to bounds
@@ -96,7 +96,7 @@ Current baseline (`baseline/controller.py`):
 Weakness:
 - plain mean is highly sensitive to outliers and corrupted channels
 
-## 7. Oracle / Reference Implementation
+## Oracle / Reference Implementation
 
 Reference (`verification/reference_controller.py`) uses anomaly-aware fusion:
 
@@ -112,12 +112,12 @@ Reference (`verification/reference_controller.py`) uses anomaly-aware fusion:
 Why this is stronger:
 - explicitly models sensor abnormality instead of assuming all channels are equally reliable
 
-## 8. Verification Outputs: What They Mean
+## Verification Outputs: What They Mean
 
 Run:
 
 ```bash
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+python verification/evaluate.py
 ```
 
 Output files in `verification/outputs/`:
@@ -132,7 +132,7 @@ Output files in `verification/outputs/`:
   - Representative phase/residual/PSF comparison.
   - Useful for checking if metric gain corresponds to visibly better residual correction.
 
-## 9. Dependency and Policy
+## Dependency and Policy
 
 - Baseline should stay lightweight (`numpy` + provided matrices).
 - Reference is allowed to use third-party `scikit-learn` (`IsolationForest`).

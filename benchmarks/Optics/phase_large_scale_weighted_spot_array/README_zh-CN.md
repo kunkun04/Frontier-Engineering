@@ -8,7 +8,7 @@
 ```text
 task04_large_scale_spot_array/
   baseline/
-    solve.py
+    init.py
   verification/
     validate.py
     outputs/
@@ -33,7 +33,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 ## 运行
 
 ```bash
-PYTHONPATH=. python benchmarks/Optics/phase_large_scale_weighted_spot_array/baseline/solve.py
+PYTHONPATH=. python benchmarks/Optics/phase_large_scale_weighted_spot_array/baseline/init.py
 PYTHONPATH=. python benchmarks/Optics/phase_large_scale_weighted_spot_array/verification/validate.py
 ```
 

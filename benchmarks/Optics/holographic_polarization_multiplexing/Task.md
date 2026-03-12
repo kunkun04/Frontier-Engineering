@@ -1,10 +1,10 @@
 # Holographic H4 Specification: Polarization Multiplexing
 
-## 0. Who this doc is for
+## Who this doc is for
 
 You are comfortable with optimization and software engineering, but may be new to polarization optics.
 
-## 1. Engineering background (plain-language)
+## Engineering background (plain-language)
 
 In polarization multiplexing, the same optical element should behave differently for different input polarization states.
 
@@ -30,28 +30,28 @@ Economic value:
 
 - one element providing multiple functions lowers hardware count and integration cost.
 
-## 2. What you need to do
+## What you need to do
 
 Improve baseline optimization so the design better separates polarization channels while matching per-channel target patterns and ratios.
 
 Editable file:
 
-- `baseline/solver.py`
+- `baseline/init.py`
 
 Read-only references:
 
 - `verification/evaluate.py`
 - `verification/reference_solver.py`
 
-## 3. Core file/function to modify
+## Core file/function to modify
 
 Primary function:
 
-- `solve(spec, device=None, seed=0)` in `baseline/solver.py`
+- `solve(spec, device=None, seed=0)` in `baseline/init.py`
 
 Keep return contract compatible.
 
-## 4. Input contract (`spec`)
+## Input contract (`spec`)
 
 Main fields:
 
@@ -69,7 +69,7 @@ Evaluator adds:
 - validity thresholds,
 - better-than-baseline margins.
 
-## 5. Output contract (`solve`)
+## Output contract (`solve`)
 
 Required return keys:
 
@@ -80,7 +80,7 @@ Required return keys:
 
 Evaluator reads these fields directly to compute channel metrics.
 
-## 6. Baseline implementation (current)
+## Baseline implementation (current)
 
 Current baseline is intentionally simple:
 
@@ -94,7 +94,7 @@ What it does not explicitly optimize:
 - per-channel ratio accuracy,
 - channel own-efficiency.
 
-## 7. Oracle implementation (current)
+## Oracle implementation (current)
 
 `verification/reference_solver.py` is stronger:
 
@@ -109,7 +109,7 @@ What it does not explicitly optimize:
 
 This yields a stronger practical reference.
 
-## 8. Metrics and score (0~1)
+## Metrics and score (0~1)
 
 Core metrics:
 
@@ -132,7 +132,7 @@ Interpretation:
 - this score emphasizes **channel separation** and **useful in-channel power**,
 - map similarity still matters, but is not the dominant term.
 
-## 9. Valid and better-than-baseline logic
+## Valid and better-than-baseline logic
 
 Baseline is valid iff:
 
@@ -145,7 +145,7 @@ Reference is better iff:
 - `reference_score >= baseline_score + better_score_margin`
 - `reference_separation >= baseline_separation + better_sep_margin`
 
-## 10. Verification artifacts and their meaning
+## Verification artifacts and their meaning
 
 Saved under `verification/artifacts/`:
 
@@ -163,7 +163,7 @@ Quick diagnosis:
 - high separation but poor ratio_score: local energy split mismatch,
 - low efficiency_score: not enough power in intended ROIs.
 
-## 11. Run verification
+## Run verification
 
 ```bash
 PY=python3

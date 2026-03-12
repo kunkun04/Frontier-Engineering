@@ -1,6 +1,6 @@
 # 相位 DOE P4 说明：大规模加权焦点阵列
 
-## 1. 背景（面向 CS 同学）
+## 背景（面向 CS 同学）
 这个任务是“多目标能量分配”问题：
 - 决策变量：相位矩阵 `(N, N)`
 - 前向模型：Fourier 传播
@@ -8,14 +8,14 @@
 
 相比 Task01，这题目标数量更多、分布更广。
 
-## 2. 你要做什么
+## 你要做什么
 改进 baseline 相位生成逻辑，提高大规模焦点阵列质量。
 
 主要修改函数：
 - `solve_baseline(problem)`
 
-## 3. 可修改边界
-- 可修改：`baseline/solve.py`
+## 可修改边界
+- 可修改：`baseline/init.py`
 - 只读：`verification/validate.py`
 
 评测依赖接口：
@@ -23,25 +23,25 @@
 - `solve_baseline(problem: dict) -> np.ndarray`
 - `forward_intensity(problem: dict, phase: np.ndarray) -> np.ndarray`
 
-## 4. 输入输出约定
-### 4.1 输入 `problem`
+## 输入输出约定
+### 输入 `problem`
 - `x`, `y`：像素坐标
 - `aperture_amp`：孔径掩膜，形状 `(N, N)`
 - `spots`：64 个目标焦点坐标
 - `weights`：归一化目标权重
 - `cfg`：SLM 与网格参数
 
-### 4.2 输出
+### 输出
 - `phase`：形状 `(N, N)` 的相位图（弧度）
 
-## 5. Baseline 当前实现
+## Baseline 当前实现
 baseline 使用非迭代的加权平面波叠加，然后直接取相位。
 
-## 6. Oracle 当前实现
+## Oracle 当前实现
 oracle 使用 `slmsuite` 的迭代 WGS：
 - `Hologram.optimize(method="WGS-Kim")`
 
-## 7. 指标与分数（越高越好）
+## 指标与分数（越高越好）
 原始指标：
 - `ratio_mae`
 - `cv_spots`
@@ -55,13 +55,13 @@ oracle 使用 `slmsuite` 的迭代 WGS：
 
 范围：`0 ~ 100`，越高越好。
 
-## 8. valid 判定
+## valid 判定
 - `score_pct >= 20`
 - `ratio_mae <= 0.03`
 - `cv_spots <= 1.40`
 - `efficiency >= 0.50`
 
-## 9. 可行优化方向
+## 可行优化方向
 - 迭代权重修正（替代一次性相位）
 - 局部相位细化或分块更新
 - 动态平衡配光误差与效率

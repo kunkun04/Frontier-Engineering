@@ -13,7 +13,7 @@ Typical applications include:
 
 ## What the agent should modify
 
-- Target file: `baseline/solver.py`
+- Target file: `baseline/init.py`
 - Other files should be considered read-only in challenge setup.
 
 ## File structure
@@ -21,7 +21,7 @@ Typical applications include:
 ```text
 task1_multifocus_power_ratio/
   baseline/
-    solver.py
+    init.py
   verification/
     evaluate.py
     reference_solver.py

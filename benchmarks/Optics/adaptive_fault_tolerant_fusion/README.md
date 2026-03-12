@@ -14,7 +14,7 @@ This task asks the agent to fuse multi-sensor slopes robustly before control.
 ```text
 task4_fault_tolerant_fusion/
   baseline/
-    controller.py
+    init.py
   verification/
     evaluate.py
     reference_controller.py
@@ -27,7 +27,7 @@ task4_fault_tolerant_fusion/
 
 ## Environment Dependencies
 
-- Python: `3.10+` (tested with `/data_storage/chihh2311/.conda/envs/aotools/bin/python`)
+- Python: `3.10+` (tested with `python`)
 - Baseline candidate runtime: `numpy`
 - Verification runtime: `numpy`, `matplotlib`, local `aotools` package (this repository)
 - Task-specific oracle dependency: `scikit-learn` (used by `verification/reference_controller.py`, `sklearn.ensemble.IsolationForest`)
@@ -36,8 +36,8 @@ task4_fault_tolerant_fusion/
 ## Run
 
 ```bash
-cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_fault_tolerant_fusion
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+cd benchmarks/Optics/adaptive_fault_tolerant_fusion
+python verification/evaluate.py
 ```
 
 ## Outputs
@@ -48,7 +48,7 @@ cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_fa
 
 ## Baseline vs Oracle Policy
 
-- Baseline target (`baseline/controller.py`) is intentionally simple and should avoid heavy third-party dependencies.
+- Baseline target (`baseline/init.py`) is intentionally simple and should avoid heavy third-party dependencies.
 - Reference oracle uses third-party `scikit-learn` `IsolationForest` + weighted inlier fusion.
 - Current profile is `v3_fault_stress` (fault-dominant multi-sensor corruption benchmark).
 - Verification scenario is a severe fault stress test (multiple corrupted sensors per case) to keep the baseline-oracle gap meaningful.

@@ -1,6 +1,6 @@
 # Fiber F1 Specification: WDM Channel + Power Allocation
 
-## 1. Background (for CS readers)
+## Background (for CS readers)
 
 In a WDM (Wavelength Division Multiplexing) optical system, multiple users share the same fiber by occupying different wavelength channels.
 
@@ -17,16 +17,16 @@ From a CS perspective, this is a constrained optimization problem combining:
 - continuous resource allocation (power),
 - non-linear quality effects (BER/SNR).
 
-## 2. What You Need To Do
+## What You Need To Do
 
 Implement one function in the candidate solver:
 
-- file to edit: `baseline/solver.py`
+- file to edit: `baseline/init.py`
 - function to evolve: `allocate_wdm(...)`
 
 Everything under `verification/` is read-only for benchmarking.
 
-## 3. Function Interface
+## Function Interface
 
 ```python
 def allocate_wdm(
@@ -44,7 +44,7 @@ def allocate_wdm(
     }
 ```
 
-## 4. Input / Output Semantics
+## Input / Output Semantics
 
 Inputs:
 
@@ -61,7 +61,7 @@ Outputs:
   - `0..C-1` means assigned channel index.
 - `power_dbm[ch]`: launch power for each channel.
 
-## 5. Hard Validity Constraints
+## Hard Validity Constraints
 
 Your output must satisfy all of the following:
 
@@ -74,7 +74,7 @@ Your output must satisfy all of the following:
 
 If this structural check fails, verification returns error immediately.
 
-## 6. Verification Pipeline and Metrics
+## Verification Pipeline and Metrics
 
 `verification/run_validation.py` builds a fixed scenario (`seed=42`) and evaluates candidate/oracle with the same code path.
 
@@ -108,9 +108,9 @@ Validity thresholds (metric-level):
 - `ber_pass_ratio >= 0.20`
 - `spectral_utilization >= 0.55`
 
-## 7. Baseline (Simple, Low Dependency)
+## Baseline (Simple, Low Dependency)
 
-`baseline/solver.py` baseline logic:
+`baseline/init.py` baseline logic:
 
 1. assign users to channels by index order,
 2. split active-channel power equally under global budget,
@@ -118,7 +118,7 @@ Validity thresholds (metric-level):
 
 This baseline is intentionally simple and only uses `numpy`.
 
-## 8. Oracle (Stronger Reference)
+## Oracle (Stronger Reference)
 
 `verification/oracle.py` uses stronger search strategies:
 
@@ -134,7 +134,7 @@ Oracle modes:
 - `--oracle-mode hybrid_scipy`: local-search + SciPy global refinement
 - `--oracle-mode auto`: choose available stronger backend automatically
 
-## 9. Files in `verification/outputs/` and How to Read Them
+## Files in `verification/outputs/` and How to Read Them
 
 After each run, two key files are generated:
 
@@ -155,7 +155,7 @@ After each run, two key files are generated:
 
 These two artifacts are enough for leaderboard scoring and qualitative diagnosis.
 
-## 10. Why This Task Is Engineering-Relevant
+## Why This Task Is Engineering-Relevant
 
 This task mimics practical network control tradeoffs:
 

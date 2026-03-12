@@ -1,6 +1,6 @@
 # 自适应光学 A1 说明：受约束 DM 控制
 
-## 1. 给 CS 背景读者的领域背景
+## 领域背景
 
 你可以把这个任务看成一个**带硬约束的向量优化控制问题**。
 
@@ -11,11 +11,11 @@
 
 如果只做 `u = R @ s` 再 `clip`，虽然合法，但在硬约束下通常不是最优。
 
-## 2. 你需要做什么
+## 你需要做什么
 
 只修改**一个函数**，实现更好的控制策略：
 
-- 可编辑文件：`baseline/controller.py`
+- 可编辑文件：`baseline/init.py`
 - 目标函数：
 
 ```python
@@ -27,7 +27,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
 - 提高排行榜分数 `score_0_to_1_higher_is_better`。
 - 保持输出始终 valid（形状正确、数值有限、不越界）。
 
-## 3. 输入输出契约
+## 输入输出
 
 ### 输入
 
@@ -58,7 +58,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
     - 不含 NaN/Inf
     - 所有元素在 `[-max_voltage, max_voltage]`
 
-## 4. Verification 场景（v3_delay_and_model_mismatch）
+## Verification 场景（v3_delay_and_model_mismatch）
 
 `verification/evaluate.py` 构造了带工程噪声和失配的动态基准：
 
@@ -70,7 +70,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
 
 因此，任务不是静态矩阵乘法，而是动态闭环中的受约束控制。
 
-## 5. 指标与分数（0~1，越高越好）
+## 指标与分数（0~1，越高越好）
 
 排行榜核心分数字段：
 - `score_0_to_1_higher_is_better`，范围 `[0, 1]`
@@ -98,18 +98,13 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
 
 `raw_cost_lower_is_better` 只用于诊断，不是排行榜优化方向。
 
-## 6. Baseline 实现（当前可运行基线）
+## Baseline 实现
 
-`baseline/controller.py` 目前做两步：
+`baseline/init.py` 目前做两步：
 1. `u = reconstructor @ slopes`
 2. 对 `u` 执行硬裁剪 `clip`
 
-弱点：
-- 没有显式求解受约束优化。
-- 没利用延迟观测与模型失配信息。
-- 在本基准中容易出现高饱和比例。
-
-## 7. Oracle / Reference 实现（对比上限）
+## 参考实现
 
 `verification/reference_controller.py` 使用 SciPy 第三方求解器：
 - `scipy.optimize.lsq_linear`
@@ -122,12 +117,12 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
 - 直接处理约束优化，而不是“先解再裁剪”。
 - 依赖成熟外部求解器，更接近可验证的高质量参考。
 
-## 8. verification/outputs 文件作用
+## 文件说明
 
 运行：
 
 ```bash
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+python verification/evaluate.py
 ```
 
 会在 `verification/outputs/` 生成：
@@ -146,8 +141,7 @@ def compute_dm_commands(slopes, reconstructor, control_model, prev_commands=None
     - `log10(PSF)`
   - 用于核对“分数提升”是否对应物理上更合理的补偿。
 
-## 9. 依赖与约束策略
+## 依赖与约束策略
 
-- Baseline 期望保持轻量（`numpy` + 给定矩阵）。
-- Reference 允许使用第三方 SciPy。
-- 不允许靠改线程数等手段刷分。
+- 参考实现 verification/reference_controller.py使用了第三方 SciPy用于提供参考结果
+- agent 修改 baseline/init.py 不允许调用此类外部库直接求解

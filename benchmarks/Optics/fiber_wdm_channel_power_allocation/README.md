@@ -12,14 +12,14 @@ This directly affects BER/SNR, achievable data rate, and spectral utilization.
 
 ## Editable target
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - Function: `allocate_wdm(...)`
 
 Only this policy function is expected to evolve.
 
 ## Structure
 
-- `baseline/solver.py`: simple sequential-assignment + equal-power baseline
+- `baseline/init.py`: simple sequential-assignment + equal-power baseline
 - `verification/oracle.py`: stronger non-editable reference strategy (`auto/hybrid_scipy/heuristic`)
 - `verification/run_validation.py`: validity checks, scoring, comparison, and plots
 - `Task.md`: full task definition
@@ -34,7 +34,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 
 Required (baseline + verification):
 
-- Recommended interpreter: `/data_storage/chihh2311/.conda/envs/opticommpy/bin/python`
+- Recommended interpreter: `python`
 - `numpy`
 - `matplotlib`
 - `optic` (OptiCommPy package in this repository, used by verification for `theoryBER`)
@@ -46,7 +46,7 @@ Optional (stronger oracle mode):
 ## Run
 
 ```bash
-/data_storage/chihh2311/.conda/envs/opticommpy/bin/python \
+python \
   benchmarks/Optics/fiber_wdm_channel_power_allocation/verification/run_validation.py
 ```
 

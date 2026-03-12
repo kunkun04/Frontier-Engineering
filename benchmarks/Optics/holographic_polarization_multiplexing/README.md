@@ -13,14 +13,14 @@ Application examples:
 
 ## What the agent should modify
 
-- Target file: `baseline/solver.py`
+- Target file: `baseline/init.py`
 
 ## File structure
 
 ```text
 task4_polarization_multiplexing/
   baseline/
-    solver.py
+    init.py
   verification/
     evaluate.py
     reference_solver.py

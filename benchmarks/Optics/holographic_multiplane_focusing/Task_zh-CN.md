@@ -1,10 +1,10 @@
 # 可微全息 H2 规范：多平面同时聚焦
 
-## 0. 适用读者
+## 适用读者
 
 默认你有优化与工程实现能力，但没有光学背景。
 
-## 1. 工程背景（通俗版）
+## 工程背景（通俗版）
 
 任务1是单平面。任务2引入了**深度维度**。
 
@@ -25,29 +25,29 @@
 
 - 一个器件完成多深度功能，可降低系统复杂度与标定成本。
 
-## 2. 你要做的事
+## 你要做的事
 
 改进 baseline 的优化流程，让它在多平面指标上更好。
 
 可编辑：
 
-- `baseline/solver.py`
+- `baseline/init.py`
 
 挑战中通常只读：
 
 - `verification/evaluate.py`
 - `verification/reference_solver.py`
 
-## 3. 核心修改文件/函数
+## 核心修改文件/函数
 
 主要函数：
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - `solve(spec, device=None, seed=0)`
 
 保持返回字段与 evaluator 兼容。
 
-## 4. 输入协议（`spec`）
+## 输入协议（`spec`）
 
 主要字段：
 
@@ -65,7 +65,7 @@
 - valid 阈值，
 - reference 对比 margin。
 
-## 5. 输出协议（`solve` 返回）
+## 输出协议（`solve` 返回）
 
 至少包含：
 
@@ -77,7 +77,7 @@
 
 评测会对每个平面调用 `system.measure_at_z(input_field, z=plane_z)`。
 
-## 6. Baseline 当前实现
+## Baseline 当前实现
 
 baseline 目前刻意偏弱：
 
@@ -92,7 +92,7 @@ baseline 目前刻意偏弱：
 - 不直接控制泄露/效率，
 - 没有针对困难平面的动态加权。
 
-## 7. Oracle 当前实现
+## Oracle 当前实现
 
 `verification/reference_solver.py` 更强：
 
@@ -106,7 +106,7 @@ baseline 目前刻意偏弱：
 
 该实现作为对照上界。
 
-## 8. 指标与分数（0~1）
+## 指标与分数（0~1）
 
 对每个平面 `m` 计算：
 
@@ -135,7 +135,7 @@ baseline 目前刻意偏弱：
 - 越接近 `1` 表示多平面同时满足得更好，
 - 低分通常意味着某个平面严重拖后腿。
 
-## 9. valid 与 better 规则
+## valid 与 better 规则
 
 `baseline valid=True` 需同时满足：
 
@@ -148,7 +148,7 @@ baseline 目前刻意偏弱：
 - `reference_mean_score >= baseline_mean_score + better_score_margin`
 - `reference_mean_shape_cosine >= baseline_mean_shape_cosine + better_shape_margin`
 
-## 10. 评测输出文件说明（artifacts）
+## 评测输出文件说明（artifacts）
 
 输出目录：`verification/artifacts/`
 
@@ -165,7 +165,7 @@ baseline 目前刻意偏弱：
 - 多平面都暗：强化能量集中/泄露控制，
 - 只有一个平面差：做平面级加权或分阶段训练。
 
-## 11. 运行方式
+## 运行方式
 
 ```bash
 PY=python3

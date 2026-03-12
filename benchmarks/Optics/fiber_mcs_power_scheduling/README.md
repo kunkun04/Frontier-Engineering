@@ -11,12 +11,12 @@ Higher MCS improves throughput but requires better SNR and may increase BER.
 
 ## Editable target
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - Function: `select_mcs_power(...)`
 
 ## Structure
 
-- `baseline/solver.py`: threshold-based baseline
+- `baseline/init.py`: threshold-based baseline
 - `verification/oracle.py`: stronger reference (`auto/exact/heuristic`, CP-SAT + fallback DP)
 - `verification/run_validation.py`: valid checks, scoring, plots
 - `Task.md`: full specification
@@ -31,7 +31,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 
 Required (baseline + verification):
 
-- Recommended interpreter: `/data_storage/chihh2311/.conda/envs/opticommpy/bin/python`
+- Recommended interpreter: `python`
 - `numpy`
 - `matplotlib`
 - `optic` (OptiCommPy package in this repository, used by verification for `theoryBER`)
@@ -43,7 +43,7 @@ Optional (stronger oracle mode):
 ## Run
 
 ```bash
-/data_storage/chihh2311/.conda/envs/opticommpy/bin/python \
+python \
   benchmarks/Optics/fiber_mcs_power_scheduling/verification/run_validation.py
 ```
 

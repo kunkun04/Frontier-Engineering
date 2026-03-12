@@ -1,10 +1,10 @@
 # Holographic H1 Specification: Multifocus Power-Ratio Control
 
-## 0. Who this doc is for
+## Who this doc is for
 
 This document assumes you have a **computer science background** (optimization, tensors, training loops), but **no optics background**.
 
-## 1. Engineering background (plain-language)
+## Engineering background (plain-language)
 
 You can think of this task as "image formation by a physical compiler":
 
@@ -24,25 +24,25 @@ Economic relevance:
 
 - better optical throughput and precision can increase yield and reduce process time.
 
-## 2. What you need to do
+## What you need to do
 
 You are expected to improve the baseline optimization strategy so that the output is closer to the target under the task score.
 
 The challenge setup is:
 
-- editable target: `baseline/solver.py`,
+- editable target: `baseline/init.py`,
 - evaluator and oracle are in `verification/` and should be treated as read-only.
 
-## 3. Core file/function to modify
+## Core file/function to modify
 
 Primary target:
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - Core function: `solve(spec, device=None, seed=0)`
 
 You may also adjust helper functions in the same file, but keep return fields compatible with evaluator.
 
-## 4. Input contract (`spec`)
+## Input contract (`spec`)
 
 `verification/evaluate.py` builds `spec` from `make_default_spec()` and injects evaluation constants.
 
@@ -64,7 +64,7 @@ Scoring/verification constants added by evaluator:
 - `valid_ratio_mae_max`, `valid_efficiency_min`, `valid_score_min`,
 - `better_score_margin`, `better_shape_margin`.
 
-## 5. Output contract (from `solve`)
+## Output contract (from `solve`)
 
 Your `solve` must return a dict containing at least:
 
@@ -76,7 +76,7 @@ Your `solve` must return a dict containing at least:
 
 If these keys are missing or geometry mismatches, verification will fail.
 
-## 6. Baseline implementation (what it currently does)
+## Baseline implementation (what it currently does)
 
 Current baseline is intentionally simple:
 
@@ -92,7 +92,7 @@ Limitations by design:
 - no explicit leakage penalty,
 - no curriculum/staged training.
 
-## 7. Oracle implementation (comparison reference)
+## Oracle implementation (comparison reference)
 
 `verification/reference_solver.py` is stronger and may use third-party tools:
 
@@ -106,7 +106,7 @@ Limitations by design:
 
 This is intended as a stronger engineering reference, not a baseline.
 
-## 8. Metrics and score (0 to 1, higher is better)
+## Metrics and score (0 to 1, higher is better)
 
 Measured on output intensity:
 
@@ -129,7 +129,7 @@ Interpretation:
 - around `0.2~0.4`: partially correct but significant deficits,
 - near `0`: mostly failing objective.
 
-## 9. Valid and better-than-baseline logic
+## Valid and better-than-baseline logic
 
 Baseline is `valid=True` iff all hold:
 
@@ -142,7 +142,7 @@ Reference is `better_than_baseline=True` iff all hold:
 - `reference_score >= baseline_score + better_score_margin`
 - `reference_shape_cosine >= baseline_shape_cosine + better_shape_margin`
 
-## 10. Verification artifacts and how to read them
+## Verification artifacts and how to read them
 
 `verification/evaluate.py` writes to `verification/artifacts/`:
 
@@ -156,7 +156,7 @@ Reference is `better_than_baseline=True` iff all hold:
   - bar chart of target/baseline/reference spot ratios,
   - training-loss curves for baseline/reference.
 
-## 11. Running verification
+## Running verification
 
 ```bash
 PY=python3

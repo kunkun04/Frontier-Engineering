@@ -203,8 +203,8 @@ def main():
     parser.add_argument(
         "--solver",
         type=str,
-        default=str(Path(__file__).resolve().parents[1] / "baseline" / "solver.py"),
-        help="Path to candidate solver.py",
+        default=str(Path(__file__).resolve().parents[1] / "baseline" / "init.py"),
+        help="Path to candidate init.py",
     )
     parser.add_argument(
         "--out-dir",

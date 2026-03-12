@@ -293,7 +293,7 @@ def main():
     parser.add_argument(
         "--candidate",
         type=str,
-        default=str(Path(__file__).resolve().parents[1] / "baseline" / "controller.py"),
+        default=str(Path(__file__).resolve().parents[1] / "baseline" / "init.py"),
         help="Path to candidate controller module.",
     )
     parser.add_argument("--max_voltage", type=float, default=0.15)

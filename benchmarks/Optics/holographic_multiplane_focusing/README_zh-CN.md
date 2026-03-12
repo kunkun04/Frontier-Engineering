@@ -13,14 +13,14 @@
 
 ## agent 需要修改的内容
 
-- 目标文件：`baseline/solver.py`
+- 目标文件：`baseline/init.py`
 
 ## 目录结构
 
 ```text
 task2_multiplane_focusing/
   baseline/
-    solver.py
+    init.py
   verification/
     evaluate.py
     reference_solver.py

@@ -13,12 +13,12 @@ This impacts:
 
 ## Editable target
 
-- `baseline/solver.py`
+- `baseline/init.py`
 - Function: `pack_spectrum(...)`
 
 ## Structure
 
-- `baseline/solver.py`: first-fit decreasing baseline
+- `baseline/init.py`: first-fit decreasing baseline
 - `verification/oracle.py`: stronger reference (`auto/hybrid/exact_geometry/heuristic`)
 - `verification/run_validation.py`: valid checks, scoring, plots
 - `Task.md`: full specification
@@ -33,7 +33,7 @@ python -m pip install -r benchmarks/Optics/requirements.txt
 
 Required (baseline + verification):
 
-- Recommended interpreter: `/data_storage/chihh2311/.conda/envs/opticommpy/bin/python`
+- Recommended interpreter: `python`
 - `numpy`
 - `matplotlib`
 - `optic` (OptiCommPy package in this repository, used by verification for `theoryBER`)
@@ -45,7 +45,7 @@ Optional (stronger oracle mode):
 ## Run
 
 ```bash
-/data_storage/chihh2311/.conda/envs/opticommpy/bin/python \
+python \
   benchmarks/Optics/fiber_guardband_spectrum_packing/verification/run_validation.py
 ```
 

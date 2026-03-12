@@ -17,7 +17,7 @@
 ```text
 task2_temporal_smooth_control/
   baseline/
-    controller.py
+    init.py
   verification/
     evaluate.py
     reference_controller.py
@@ -30,7 +30,7 @@ task2_temporal_smooth_control/
 
 ## 环境依赖
 
-- Python：`3.10+`（已验证解释器：`/data_storage/chihh2311/.conda/envs/aotools/bin/python`）
+- Python：`3.10+`（已验证解释器：`python`）
 - Baseline 候选实现运行依赖：`numpy`
 - Verification 评测依赖：`numpy`、`matplotlib`、仓库内本地 `aotools` 包
 - 任务特定 oracle 依赖：无（reference 为解析控制器，不依赖额外第三方求解器）
@@ -39,8 +39,8 @@ task2_temporal_smooth_control/
 ## 运行方式
 
 ```bash
-cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_temporal_smooth_control
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+cd benchmarks/Optics/adaptive_temporal_smooth_control
+python verification/evaluate.py
 ```
 
 ## 输出
@@ -51,6 +51,6 @@ cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_te
 
 ## Baseline 与 Oracle 约束
 
-- Baseline 目标是 `baseline/controller.py`，应避免重型第三方求解器。
+- Baseline 目标是 `baseline/init.py`，应避免重型第三方求解器。
 - Reference/oracle 是带延迟补偿的解析平滑控制器（仍不依赖第三方优化器）。
 - 当前配置为 `v3_delay_and_model_mismatch`，包含观测延迟与执行器约束。

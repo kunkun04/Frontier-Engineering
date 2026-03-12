@@ -202,7 +202,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--solver",
-        default=str(Path(__file__).resolve().parents[1] / "baseline" / "solver.py"),
+        default=str(Path(__file__).resolve().parents[1] / "baseline" / "init.py"),
     )
     parser.add_argument(
         "--out-dir",

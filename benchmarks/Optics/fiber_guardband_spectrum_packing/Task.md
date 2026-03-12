@@ -1,6 +1,6 @@
 # Fiber F4 Specification: Spectrum Packing with Guard Bands
 
-## 1. Background (for CS readers)
+## Background (for CS readers)
 
 Elastic optical networking can be modeled as packing variable-width requests into a finite 1D spectrum grid.
 
@@ -14,16 +14,16 @@ Constraints:
 
 This is close to constrained bin packing / interval scheduling with additional communication-quality implications.
 
-## 2. What You Need To Do
+## What You Need To Do
 
 Implement one function:
 
-- editable file: `baseline/solver.py`
+- editable file: `baseline/init.py`
 - function to evolve: `pack_spectrum(...)`
 
 `verification/` scripts and oracle are read-only references.
 
-## 3. Function Interface
+## Function Interface
 
 ```python
 def pack_spectrum(user_demand_slots, n_slots, guard_slots=1, seed=0):
@@ -35,7 +35,7 @@ Allocation encoding per user `i`:
 - assigned: `(start, width)`
 - not assigned: `(-1, 0)`
 
-## 4. Input / Output Semantics
+## Input / Output Semantics
 
 Inputs:
 
@@ -48,7 +48,7 @@ Output:
 - `alloc[i] = (start, width)` if user is accepted.
 - `alloc[i] = (-1, 0)` if user is rejected.
 
-## 5. Hard Validity Constraints
+## Hard Validity Constraints
 
 `verification` checks geometry strictly:
 
@@ -60,7 +60,7 @@ Output:
 
 Invalid geometry makes final result invalid regardless of score.
 
-## 6. Verification Pipeline and Metrics
+## Verification Pipeline and Metrics
 
 Scenario (`seed=99`) is deliberately hard:
 
@@ -91,9 +91,9 @@ Validity thresholds:
 - `ber_pass_ratio >= 0.80`
 - geometry must be valid
 
-## 7. Baseline (Simple, Low Dependency)
+## Baseline (Simple, Low Dependency)
 
-`baseline/solver.py` uses First-Fit Decreasing:
+`baseline/init.py` uses First-Fit Decreasing:
 
 1. sort users by descending demand width,
 2. place each request at first feasible position,
@@ -101,7 +101,7 @@ Validity thresholds:
 
 Simple and deterministic, but can create fragmentation and poor acceptance.
 
-## 8. Oracle (Stronger Reference)
+## Oracle (Stronger Reference)
 
 `verification/oracle.py` supports multiple stronger methods:
 
@@ -116,7 +116,7 @@ Important note:
 - `exact_geometry` is exact for geometry objective, not necessarily exact for final score,
 - in practice `hybrid` can outperform `exact_geometry` on final score.
 
-## 9. Files in `verification/outputs/`
+## Files in `verification/outputs/`
 
 Each run generates:
 
@@ -137,7 +137,7 @@ Each run generates:
 
 This plot is useful for visually diagnosing fragmentation and acceptance behavior.
 
-## 10. Why This Task Is Engineering-Relevant
+## Why This Task Is Engineering-Relevant
 
 The objective aligns with practical spectrum economics:
 

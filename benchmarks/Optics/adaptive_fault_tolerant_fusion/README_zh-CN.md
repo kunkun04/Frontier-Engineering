@@ -14,7 +14,7 @@
 ```text
 task4_fault_tolerant_fusion/
   baseline/
-    controller.py
+    init.py
   verification/
     evaluate.py
     reference_controller.py
@@ -27,7 +27,7 @@ task4_fault_tolerant_fusion/
 
 ## 环境依赖
 
-- Python：`3.10+`（已验证解释器：`/data_storage/chihh2311/.conda/envs/aotools/bin/python`）
+- Python：`3.10+`（已验证解释器：`python`）
 - Baseline 候选实现运行依赖：`numpy`
 - Verification 评测依赖：`numpy`、`matplotlib`、仓库内本地 `aotools` 包
 - 任务特定 oracle 依赖：`scikit-learn`（`verification/reference_controller.py` 使用 `sklearn.ensemble.IsolationForest`）
@@ -36,8 +36,8 @@ task4_fault_tolerant_fusion/
 ## 运行方式
 
 ```bash
-cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_fault_tolerant_fusion
-/data_storage/chihh2311/.conda/envs/aotools/bin/python verification/evaluate.py
+cd benchmarks/Optics/adaptive_fault_tolerant_fusion
+python verification/evaluate.py
 ```
 
 ## 输出
@@ -48,7 +48,7 @@ cd /DATA_EDS2/haohan.chi.2311/Frontier-Engineering/benchmarks/Optics/adaptive_fa
 
 ## Baseline 与 Oracle 约束
 
-- Baseline 目标（`baseline/controller.py`）刻意保持简单，不应依赖重型第三方包。
+- Baseline 目标（`baseline/init.py`）刻意保持简单，不应依赖重型第三方包。
 - Reference/oracle 使用第三方 `scikit-learn` `IsolationForest` + inlier 加权融合。
 - 当前配置为 `v3_fault_stress`（故障主导的多传感器压力测试）。
 - 验证场景采用重故障压力测试（每个样本多路传感器污染），确保对比差距具备工程意义。

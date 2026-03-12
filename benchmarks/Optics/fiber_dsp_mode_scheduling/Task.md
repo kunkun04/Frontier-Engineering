@@ -1,6 +1,6 @@
 # Fiber F3 Specification: DSP Mode Scheduling (EDC vs DBP)
 
-## 1. Background (for CS readers)
+## Background (for CS readers)
 
 In coherent optical receivers, there are different DSP processing modes:
 
@@ -15,16 +15,16 @@ From a CS perspective, this is a constrained binary optimization:
 - maximize weighted communication utility,
 - satisfy global latency constraint (and optional DBP count cap).
 
-## 2. What You Need To Do
+## What You Need To Do
 
 Implement one candidate function:
 
-- editable file: `baseline/solver.py`
+- editable file: `baseline/init.py`
 - function to evolve: `choose_dsp_mode(...)`
 
 Verification scripts and oracle are read-only.
 
-## 3. Function Interface
+## Function Interface
 
 ```python
 def choose_dsp_mode(user_features, latency_budget_s, max_dbp_users=None, seed=0):
@@ -36,7 +36,7 @@ Mode convention:
 - `0` = EDC
 - `1` = DBP
 
-## 4. Input / Output Semantics
+## Input / Output Semantics
 
 `user_features` contains per-user arrays:
 
@@ -57,7 +57,7 @@ Output:
 
 - `mode[u] in {0,1}` for each user.
 
-## 5. Hard Validity Constraints
+## Hard Validity Constraints
 
 1. output is dict with key `mode`
 2. `mode.shape == (U,)`
@@ -68,7 +68,7 @@ Then metric-level validity requires:
 - total latency within budget tolerance
 - BER pass ratio above threshold
 
-## 6. Verification Pipeline and Metrics
+## Verification Pipeline and Metrics
 
 Scenario (`seed=7`) is intentionally difficult and structured:
 
@@ -104,9 +104,9 @@ Validity thresholds:
 - `latency <= budget * 1.001`
 - `ber_pass_ratio >= 0.18`
 
-## 7. Baseline (Simple, Low Dependency)
+## Baseline (Simple, Low Dependency)
 
-`baseline/solver.py` currently does:
+`baseline/init.py` currently does:
 
 1. sort users by lower SNR first,
 2. greedily assign DBP while latency budget allows,
@@ -114,7 +114,7 @@ Validity thresholds:
 
 This is easy to understand but ignores weighted global tradeoffs.
 
-## 8. Oracle (Stronger Reference)
+## Oracle (Stronger Reference)
 
 `verification/oracle.py` models this as knapsack-like optimization:
 
@@ -130,7 +130,7 @@ Oracle modes:
 - `--oracle-mode heuristic`: force DP
 - `--oracle-mode auto`: CP-SAT first, DP fallback
 
-## 9. Files in `verification/outputs/`
+## Files in `verification/outputs/`
 
 Generated artifacts:
 
@@ -151,7 +151,7 @@ Generated artifacts:
 
 Use this to debug whether your policy is choosing DBP on the right users.
 
-## 10. Why This Task Is Engineering-Relevant
+## Why This Task Is Engineering-Relevant
 
 This task captures a realistic compute-vs-quality tradeoff:
 
