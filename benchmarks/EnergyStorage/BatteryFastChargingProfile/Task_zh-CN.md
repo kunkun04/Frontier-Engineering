@@ -123,12 +123,15 @@ def build_charging_profile() -> dict:
 最终分数：
 
 ```text
-combined_score = 100 * (
-  0.55 * time_score +
-  0.30 * degradation_score +
-  0.15 * thermal_score
+combined_score = score_scale * (
+  weight_time * time_score +
+  weight_degradation * degradation_score +
+  weight_thermal * thermal_score +
+  weight_voltage * voltage_score
 )
 ```
+
+其中各项权重和缩放系数都从 `references/battery_config.json` 读取。
 
 分数越高越好。
 

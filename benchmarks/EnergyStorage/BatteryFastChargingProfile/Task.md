@@ -123,12 +123,15 @@ For feasible profiles:
 The final score is:
 
 ```text
-combined_score = 100 * (
-  0.55 * time_score +
-  0.30 * degradation_score +
-  0.15 * thermal_score
+combined_score = score_scale * (
+  weight_time * time_score +
+  weight_degradation * degradation_score +
+  weight_thermal * thermal_score +
+  weight_voltage * voltage_score
 )
 ```
+
+The weights and scaling factor are read from `references/battery_config.json`.
 
 Higher is better.
 

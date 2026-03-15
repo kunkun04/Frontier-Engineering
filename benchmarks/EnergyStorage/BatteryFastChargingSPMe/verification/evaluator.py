@@ -154,7 +154,7 @@ def _simulate(currents_c: list[float], switch_soc: list[float], cfg: dict[str, A
     max_time_s = float(sim["max_time_s"])
     temp_ref_k = float(sim["temperature_ref_k"])
     ambient_temp_c = float(battery["ambient_temp_c"])
-    ambient_temp_k = ambient_temp_c + 273.15
+    cold_reference_c = temp_ref_k - 273.15
 
     soc = float(battery["initial_soc"])
     target_soc = float(battery["target_soc"])
@@ -237,7 +237,7 @@ def _simulate(currents_c: list[float], switch_soc: list[float], cfg: dict[str, A
             u_n
             - eta_n
             - 0.5 * phi_e
-            - float(aging["temperature_penalty_coeff"]) * max(0.0, 25.0 - temp_c)
+            - float(aging["temperature_penalty_coeff"]) * max(0.0, cold_reference_c - temp_c)
         )
         min_plating_margin_v = min(min_plating_margin_v, plating_margin_v)
 
